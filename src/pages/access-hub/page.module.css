@@ -1,0 +1,61 @@
+.logo {
+  font-size: 50px;
+  font-style: italic;
+  text-decoration: underline;
+}
+
+.title {
+  font-size: 30px;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+  gap: 50px;
+}
+
+@media (min-width: $mantine-breakpoint-xs ) {
+  .logo {
+    font-size: 100px;
+  }
+
+  .title {
+    font-size: 45px;
+  }
+}
+
+@media (min-width: $mantine-breakpoint-sm ) {
+  .logo {
+    font-size: 400px;
+    flex-grow: 1;
+  }
+
+  .title {
+    font-size: 50px;
+  }
+
+  .layout {
+    flex-direction: row;
+  }
+
+}
+
+@media (min-width: $mantine-breakpoint-md ) {
+  .logo {
+    font-size: 600px;
+    flex-grow: 0;
+  }
+
+  .title {
+    font-size: 60px;
+  }
+
+  .layout {
+    gap: 100px;
+  }
+
+}

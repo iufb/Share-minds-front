@@ -1,0 +1,2 @@
+
+export { appStarted } from './init'
