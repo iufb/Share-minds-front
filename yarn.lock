@@ -2694,6 +2694,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"patronum@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "patronum@npm:2.1.1"
+  peerDependencies:
+    effector: ^23
+  checksum: 42be200ab0d7530daa060b97bcf698c24cbbc7d5a9e084cda79d447998eec9076d333d8d583e2b59f3200572ef46c929e213530939f9d1dd3c6d467d5bfb667a
+  languageName: node
+  linkType: hard
+
 "picocolors@npm:^1.0.0":
   version: 1.0.0
   resolution: "picocolors@npm:1.0.0"
@@ -3492,6 +3501,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-react-refresh: "npm:^0.4.4"
     history: "npm:^5.3.0"
+    patronum: "npm:^2.1.1"
     postcss: "npm:^8.4.32"
     postcss-preset-mantine: "npm:1.12.0"
     postcss-simple-vars: "npm:^7.0.1"

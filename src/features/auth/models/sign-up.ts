@@ -1,20 +1,32 @@
 import { attach, createEvent, createStore, sample } from "effector";
 import * as api from "src/shared/api/auth";
 import { createField } from "src/shared/utils";
-const signInFx = attach({ effect: api.signInFx });
+const signUpFx = attach({ effect: api.signUpFx });
 
 //Events
 export const formSubmitted = createEvent();
-
 //Stores
 
 export const emailField = createField({
   defaultValue: "",
-  resetOn: [signInFx.done],
+  resetOn: [signUpFx.done],
 });
+export const usernameField = createField({
+  defaultValue: "",
+  resetOn: [signUpFx.done],
+  validate: {
+    on: formSubmitted,
+    fn: (name) => {
+      if (name.length < 3) {
+        return "Length need more than 3";
+      }
+    },
+  },
+});
+
 export const passwordField = createField({
   defaultValue: "",
-  resetOn: [signInFx.done],
+  resetOn: [signUpFx.done],
   validate: {
     on: formSubmitted,
     fn: (pass) => {
@@ -28,12 +40,19 @@ export const $error = createStore<api.SignInError | null>(null);
 export const $pending = createStore(false);
 
 // handle event changes
-$error.on(signInFx.failData, (_, error) => error);
-$error.on([emailField.changed, passwordField.changed], () => null);
+$error.on(signUpFx.failData, (_, error) => error);
+$error.on(
+  [emailField.changed, usernameField.changed, passwordField.changed],
+  () => null,
+);
 
 // Form submit
 sample({
   clock: formSubmitted,
-  source: { email: emailField.$value, password: passwordField.$value },
-  target: signInFx,
+  source: {
+    email: emailField.$value,
+    username: usernameField.$value,
+    password: passwordField.$value,
+  },
+  target: signUpFx,
 });
