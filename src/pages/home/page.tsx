@@ -1,13 +1,19 @@
-import { Button, Container } from "@mantine/core";
-import { Link } from "atomic-router-react";
-import { routes } from "src/shared/routing";
+import { BaseLayout } from "src/shared/ui";
+import { Sidebar } from "src/widgets/sidebar";
 export const HomePage = () => {
   return (
-    <Container fluid h="100vh" bg={"dark-blue.9"} c={"white"}>
-      Home
-      <Button component={Link} to={routes.auth.signin}>
-        SignIn
-      </Button>
-    </Container>
+    <BaseLayout
+      sidebar={<Sidebar />}
+      header={<div>Header</div>}
+      main={
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {new Array(6).fill("main").map((w, idx) => (
+            <div key={idx} style={{ height: 300, border: "1px solid red" }}>
+              {idx} {w}
+            </div>
+          ))}
+        </div>
+      }
+    />
   );
 };

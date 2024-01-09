@@ -1,0 +1,39 @@
+.header {
+  position: fixed;
+  padding-left: 10px;
+  top: 0;
+  width: 100%;
+  z-index: 20;
+  background: var(--mantine-color-dark-blue-9);
+}
+.group {
+  margin-top: 50px;
+}
+.sidebar {
+  border-right: 1px solid var(--mantine-color-white);
+  width: 50px;
+  height: 100%;
+  position: fixed;
+}
+.main {
+  flex-grow: 1;
+  margin-left: 50px;
+  height: 100%;
+}
+.aside {
+  display: none;
+  width: 350px;
+  height: 100%;
+  border-left: 1px solid var(--mantine-color-white);
+}
+@media (min-width: $mantine-breakpoint-md) {
+  .sidebar {
+    width: 260px;
+  }
+  .main {
+    margin-left: 260px;
+  }
+  .aside {
+    display: flex;
+  }
+}
