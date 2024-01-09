@@ -1,7 +1,13 @@
 import { HomePage } from "./page";
-import { currentRoute } from "./model";
+import { authorizedRoute, currentRoute } from "./model";
+import { createRouteView } from "atomic-router-react";
+import { PageLoader } from "src/shared/ui";
 
 export const HomeRoute = {
-  view: HomePage,
+  view: createRouteView({
+    route: authorizedRoute,
+    view: HomePage,
+    otherwise: PageLoader,
+  }),
   route: currentRoute,
 };

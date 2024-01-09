@@ -19,7 +19,6 @@ enum AuthStatus {
 export const sessionRequestFx = attach({ effect: api.getSessionFx });
 
 export const $user = createStore<User | null>(null);
-const $error = createStore(0);
 const $authenticationStatus = createStore(AuthStatus.Initial);
 
 $authenticationStatus.on(sessionRequestFx, (status) => {
@@ -28,14 +27,13 @@ $authenticationStatus.on(sessionRequestFx, (status) => {
 });
 
 $user.on(sessionRequestFx.doneData, (_, user) => user);
-$authenticationStatus.on(sessionRequestFx.done, () => AuthStatus.Pending);
+$authenticationStatus.on(sessionRequestFx.done, () => AuthStatus.Authenticated);
 
 $authenticationStatus.on(sessionRequestFx.fail, () => AuthStatus.Anonymous);
-$error.on(sessionRequestFx.failData, (_, { statusCode }) => statusCode);
-debug($error);
 interface ChainParams<Params extends RouteParams> {
   otherwise?: Effect<void, RouteParamsAndQuery<Params>, any>;
 }
+debug($authenticationStatus);
 export function chainAuthorized<Params extends RouteParams>(
   route: RouteInstance<Params>,
   { otherwise }: ChainParams<Params> = {},
