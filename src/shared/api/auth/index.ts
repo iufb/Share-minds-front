@@ -47,7 +47,7 @@ export const signUpFx = createEffect<
 });
 
 export type User = {
-  id: number;
+  userId: number;
   email: string;
   username: string;
 };

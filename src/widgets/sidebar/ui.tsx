@@ -1,4 +1,4 @@
-import { Box, Group, NavLink, Stack } from "@mantine/core";
+import { Box, Stack, Text } from "@mantine/core";
 import {
   IconBookmark,
   IconHome,
@@ -9,6 +9,7 @@ import { Link } from "atomic-router-react";
 import { routes } from "src/shared/routing";
 import styles from "./ui.module.css";
 import clsx from "clsx";
+import { createPortal } from "react-dom";
 const navlinks = [
   {
     leftSection: (active: boolean) => (
@@ -43,18 +44,23 @@ const navlinks = [
 ];
 export const Sidebar = () => {
   return (
-    <Stack component="nav">
-      {navlinks.map(({ leftSection, path, name }) => {
-        const isActive = path === routes.home;
-        return (
-          <Link to={path} className={styles["navlink"]} key={name}>
-            {leftSection(isActive)}
-            <span className={clsx(isActive ? styles["active"] : null)}>
-              {name}
-            </span>
-          </Link>
-        );
-      })}
+    <Stack className={styles["container"]}>
+      <Stack component="nav">
+        {navlinks.map(({ leftSection, path, name }) => {
+          const isActive = path === routes.home;
+          return (
+            <Link to={path} className={styles["navlink"]} key={name}>
+              {leftSection(isActive)}
+              <Text
+                component="span"
+                className={clsx(isActive ? styles["active"] : null)}
+              >
+                {name}
+              </Text>
+            </Link>
+          );
+        })}
+      </Stack>
     </Stack>
   );
 };

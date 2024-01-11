@@ -11,13 +11,13 @@
 }
 .sidebar {
   border-right: 1px solid var(--mantine-color-white);
-  width: 50px;
   height: 100%;
+  width: 88px;
   position: fixed;
 }
 .main {
   flex-grow: 1;
-  margin-left: 50px;
+  margin-left: 88px;
   height: 100%;
 }
 .aside {

@@ -1,9 +1,13 @@
+.container {
+  display: flex;
+  align-content: center;
+  flex-wrap: wrap;
+}
 .navlink {
-  font-size: 20px;
   font-weight: lighter;
   font-style: none;
   width: fit-content;
-  padding: 4px 10px;
+  padding: 10px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,7 +20,7 @@
   background-color: rgba(255, 255, 255, 0.1);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border-radius: 19px;
+  border-radius: 100%;
 }
 
 .navlink > span {
@@ -30,5 +34,12 @@
 @media (min-width: $mantine-breakpoint-md) {
   .navlink > span {
     display: inline;
+    font-size: 20px;
+  }
+  .navlink:hover {
+    border-radius: 20px;
+  }
+  .container {
+    align-content: start;
   }
 }

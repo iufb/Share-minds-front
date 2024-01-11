@@ -1,0 +1,23 @@
+import { attach, createEvent, createStore, sample } from "effector";
+import { User } from "src/shared/api/auth";
+import * as api from "src/shared/api/post";
+import { $user } from "src/shared/session";
+import { createField } from "src/shared/utils";
+
+const createPostFx = attach({ effect: api.createPostFx });
+
+export const formSubmited = createEvent();
+
+export const contentField = createField({
+  defaultValue: "",
+  resetOn: [createPostFx.done],
+});
+const $s = createEvent<string>();
+sample({
+  clock: formSubmited,
+  filter: (user: User | null): user is User => user !== null,
+  fn: (user) => {
+    return user.userId;
+  },
+  target: $s,
+});

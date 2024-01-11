@@ -7,7 +7,6 @@ import {
 import { Effect, attach, createEvent, createStore, sample } from "effector";
 import { debug } from "patronum";
 import * as api from "src/shared/api/auth";
-import { User } from "src/shared/api/auth";
 
 enum AuthStatus {
   Initial,
@@ -18,7 +17,7 @@ enum AuthStatus {
 
 export const sessionRequestFx = attach({ effect: api.getSessionFx });
 
-export const $user = createStore<User | null>(null);
+export const $user = createStore<api.User | null>(null);
 const $authenticationStatus = createStore(AuthStatus.Initial);
 
 $authenticationStatus.on(sessionRequestFx, (status) => {
