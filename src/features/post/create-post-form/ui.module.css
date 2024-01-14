@@ -1,6 +1,9 @@
-.textarea-root {
-  flex-grow: 1;
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
+
 .textarea-input {
   background: var(--mantine-color-dark-blue-9);
   color: var(--mantine-color-white);
@@ -8,4 +11,8 @@
 }
 .textarea-input:focus {
   font-size: 20px;
+}
+
+.postButton {
+  align-self: end;
 }

@@ -33,7 +33,6 @@ export const $pending = createStore(false);
 // handle event changes
 $error.on(signInFx.failData, (_, error) => error);
 $error.on([emailField.changed, passwordField.changed], () => null);
-debug(passwordField.$error);
 // Form submit
 sample({
   clock: formSubmitted,

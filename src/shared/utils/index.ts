@@ -27,6 +27,7 @@ export function createField<Value, Error>(options: ICreateField<Value, Error>) {
       fn: options.validate.fn,
       target: $error,
     });
+    $error.on(changed, () => null);
   }
   if (options.resetOn) {
     $value.reset(options.resetOn);
@@ -39,7 +40,7 @@ interface Request {
   path: string;
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   query?: URLSearchParams | Record<string, any>;
-  body?: { json: unknown };
+  body?: { json?: unknown; multipart?: FormData };
 }
 
 export const requestFx = createEffect(async (params: Request) => {
@@ -48,12 +49,19 @@ export const requestFx = createEffect(async (params: Request) => {
     params.query instanceof URLSearchParams
       ? params.query.toString()
       : new URLSearchParams(params.query).toString();
-  const body = params.body?.json
-    ? JSON.stringify(params.body?.json)
-    : undefined;
+  let body;
+  if (params.body?.json) {
+    body = JSON.stringify(params.body?.json);
+  }
+  if (params.body?.multipart) {
+    body = params.body.multipart;
+  }
   const headers = new Headers();
   if (params.body?.json) {
     headers.set("content-type", "application/json");
+  }
+  if (params.body?.multipart) {
+    headers.set("content-type", "multipart/form-data");
   }
   const response = await fetch(url, {
     method: params.method,

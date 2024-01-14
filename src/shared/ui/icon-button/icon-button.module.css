@@ -1,0 +1,46 @@
+.button {
+  width: fit-content;
+  padding: 5px;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+
+  border: none;
+  cursor: pointer;
+}
+.button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.button:disabled:hover {
+  background: inherit;
+}
+.button:hover {
+  backdrop-filter: blur 10px;
+  transition: 0.2s ease-in-out;
+}
+.base {
+  background: inherit;
+}
+.base > svg {
+  color: var(--mantine-color-light-blue-5);
+}
+
+.base:hover {
+  background: rgba(var(--rgb-blue-color), 0.1);
+}
+.base > svg:hover {
+  color: var(--mantine-color-light-blue-4);
+}
+.close {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.close:hover {
+  background: rgba(0, 0, 0, 0.4);
+}

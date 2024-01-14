@@ -1,5 +1,5 @@
 import { HomePage } from "./page";
-import { authorizedRoute, currentRoute } from "./model";
+import { authorizedRoute, currentRoute, homeRoute } from "./model";
 import { createRouteView } from "atomic-router-react";
 import { PageLoader } from "src/shared/ui";
 

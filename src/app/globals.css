@@ -6,3 +6,6 @@ body {
   background: var(--mantine-color-dark-blue-9);
   color: white;
 }
+:root {
+  --rgb-blue-color: 0, 118, 193;
+}
