@@ -18,7 +18,7 @@ export const Feed = () => {
           <Loader />{" "}
         </Center>
       ) : (
-        <Stack>{posts}</Stack>
+        <Stack h="100%">{posts}</Stack>
       )}
     </Stack>
   );

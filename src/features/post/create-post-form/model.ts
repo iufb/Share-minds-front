@@ -15,7 +15,6 @@ export const createPostFx = attach({ effect: api.createPostFx });
 export const formSubmited = createEvent();
 export const closeButtonClicked = createEvent<ReadedFilesType>();
 
-// $selectedFiles.$value.on(closeButtonClicked, (list, src) => list?.filter((file)=> )
 export const contentField = createField({
   defaultValue: "",
   validate: {

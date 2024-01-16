@@ -23,14 +23,14 @@
 }
 .main {
   flex-grow: 1;
-  height: 100%;
   padding-right: 5px;
+  min-height: 100vh;
+  border-right: 1px solid var(--mantine-color-white);
 }
 .aside {
   display: none;
   width: 350px;
   height: 100%;
-  border-left: 1px solid var(--mantine-color-white);
 }
 @media (min-width: $mantine-breakpoint-sm) {
   .container {

@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from "@mantine/core";
+import { Stack, Text } from "@mantine/core";
 import {
   IconBookmark,
   IconHome,
@@ -9,6 +9,7 @@ import { Link } from "atomic-router-react";
 import { routes } from "src/shared/routing";
 import styles from "./ui.module.css";
 import clsx from "clsx";
+import { useUnit } from "effector-react";
 const navlinks = [
   {
     leftSection: (active: boolean) => (
@@ -45,21 +46,24 @@ export const Sidebar = () => {
   return (
     <Stack className={styles["container"]}>
       <Stack component="nav" className={styles["navContainer"]}>
-        {navlinks.map(({ leftSection, path, name }) => {
-          const isActive = path === routes.home;
-          return (
-            <Link to={path} className={styles["navlink"]} key={name}>
-              {leftSection(isActive)}
-              <Text
-                component="span"
-                className={clsx(isActive ? styles["active"] : null)}
-              >
-                {name}
-              </Text>
-            </Link>
-          );
-        })}
+        {navlinks.map(({ leftSection, path, name }) => (
+          <Navlink leftSection={leftSection} path={path} name={name} />
+        ))}
       </Stack>
     </Stack>
+  );
+};
+const Navlink = ({ leftSection, path, name }: (typeof navlinks)[0]) => {
+  const isOpened = useUnit(path.$isOpened);
+  return (
+    <Link to={path} className={styles["navlink"]} key={name}>
+      {leftSection(isOpened)}
+      <Text
+        component="span"
+        className={clsx(isOpened ? styles["active"] : null)}
+      >
+        {name}
+      </Text>
+    </Link>
   );
 };
