@@ -1,7 +1,8 @@
 .wrapper {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 200px;
+  overflow: hidden;
 }
 .preview {
   border-radius: 20px;
@@ -14,4 +15,10 @@
   position: absolute;
   right: 5px;
   top: 5px;
+}
+
+@media (min-width: $mantine-breakpoint-sm) {
+  .wrapper {
+    height: 100%;
+  }
 }

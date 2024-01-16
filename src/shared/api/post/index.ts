@@ -5,11 +5,9 @@ export interface Post {
   id: number;
   author: User;
   content: string;
+  images: string[];
 }
-export interface CreatePostRequest {
-  content: string;
-  authorId: number;
-}
+export interface CreatePostRequest extends FormData {}
 export type CreatePostResponse = {
   status: string;
 };

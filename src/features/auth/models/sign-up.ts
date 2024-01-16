@@ -1,5 +1,6 @@
 import { attach, createEvent, createStore, sample } from "effector";
 import * as api from "src/shared/api/auth";
+import { sessionRequestFx } from "src/shared/session";
 import { createField } from "src/shared/utils";
 const signUpFx = attach({ effect: api.signUpFx });
 
@@ -55,4 +56,8 @@ sample({
     password: passwordField.$value,
   },
   target: signUpFx,
+});
+sample({
+  clock: signUpFx.done,
+  target: sessionRequestFx,
 });

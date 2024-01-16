@@ -9,7 +9,6 @@ import { Link } from "atomic-router-react";
 import { routes } from "src/shared/routing";
 import styles from "./ui.module.css";
 import clsx from "clsx";
-import { createPortal } from "react-dom";
 const navlinks = [
   {
     leftSection: (active: boolean) => (
@@ -45,7 +44,7 @@ const navlinks = [
 export const Sidebar = () => {
   return (
     <Stack className={styles["container"]}>
-      <Stack component="nav">
+      <Stack component="nav" className={styles["navContainer"]}>
         {navlinks.map(({ leftSection, path, name }) => {
           const isActive = path === routes.home;
           return (

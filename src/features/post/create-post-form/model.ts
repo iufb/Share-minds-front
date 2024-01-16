@@ -5,7 +5,7 @@ import {
   createStore,
   sample,
 } from "effector";
-import { and, every, not } from "patronum";
+import { and, every, not, reset } from "patronum";
 import { User } from "src/shared/api/auth";
 import * as api from "src/shared/api/post";
 import { $user } from "src/shared/session";
@@ -32,7 +32,6 @@ export const contentField = createField({
 export const $selectedFiles = createField<File[] | null, Error>({
   defaultValue: null,
 });
-
 const $formValid = every({
   stores: [contentField.$error],
   predicate: (status) => status === null,
@@ -92,11 +91,26 @@ sample({
   clock: formSubmited,
   // $user type is User | null
   source: sample({
-    source: { user: $user, content: contentField.$value },
+    source: {
+      user: $user,
+      content: contentField.$value,
+    },
     filter: (source: Source): source is ValidSource =>
       typeof source.user === "object",
   }),
   filter: and($formValid, not($formPending)),
-  fn: ({ user, content }) => ({ authorId: user.userId, content }),
+  fn: ({ user, content }) => {
+    const formdata = new FormData();
+    formdata.append("post", JSON.stringify({ authorId: user.userId, content }));
+    $selectedFiles.$value.map((files) => {
+      if (!files) return;
+      files.map((file) => formdata.append("files", file));
+    });
+    return formdata;
+  },
   target: createPostFx,
+});
+reset({
+  clock: [createPostFx.done],
+  target: [$selectedFiles.$value, $selectedFilesSrc],
 });

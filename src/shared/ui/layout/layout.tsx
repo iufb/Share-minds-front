@@ -8,7 +8,7 @@ interface IBaseLayout {
 }
 export const BaseLayout: FC<IBaseLayout> = ({ header, main, sidebar }) => {
   return (
-    <Container fluid h={"100vh"} maw={1270} p={{ xl: 10, md: 0 }}>
+    <Container fluid h={"100vh"} maw={1270} className={styles["container"]}>
       <Box component="header" h={50} className={styles["header"]}>
         {header}
       </Box>

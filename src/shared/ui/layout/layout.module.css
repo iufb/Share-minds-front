@@ -1,3 +1,7 @@
+.container {
+  padding: 0;
+  position: relative;
+}
 .header {
   position: fixed;
   padding-left: 10px;
@@ -10,21 +14,42 @@
   margin-top: 50px;
 }
 .sidebar {
-  border-right: 1px solid var(--mantine-color-white);
-  height: 100%;
-  width: 88px;
+  z-index: 40;
+  border-top: 1px solid var(--mantine-color-white);
   position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: var(--mantine-color-dark-blue-9);
 }
 .main {
   flex-grow: 1;
-  margin-left: 88px;
   height: 100%;
+  padding-right: 5px;
 }
 .aside {
   display: none;
   width: 350px;
   height: 100%;
   border-left: 1px solid var(--mantine-color-white);
+}
+@media (min-width: $mantine-breakpoint-sm) {
+  .container {
+    padding: 0 5px 0 5px;
+  }
+  .sidebar {
+    height: 100%;
+    top: 50px;
+    border-top: none;
+    border-right: 1px solid var(--mantine-color-white);
+    width: 88px;
+  }
+  .main {
+    margin-left: 88px;
+    padding-right: 0;
+  }
+  .aside {
+    display: flex;
+  }
 }
 @media (min-width: $mantine-breakpoint-md) {
   .sidebar {

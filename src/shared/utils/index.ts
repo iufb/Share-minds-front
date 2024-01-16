@@ -60,9 +60,9 @@ export const requestFx = createEffect(async (params: Request) => {
   if (params.body?.json) {
     headers.set("content-type", "application/json");
   }
-  if (params.body?.multipart) {
-    headers.set("content-type", "multipart/form-data");
-  }
+  // if (params.body?.multipart) {
+  //   headers.set("content-type", "multipart/form-data");
+  // }
   const response = await fetch(url, {
     method: params.method,
     body,

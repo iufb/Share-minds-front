@@ -3,6 +3,9 @@
   align-content: center;
   flex-wrap: wrap;
 }
+.navContainer {
+  flex-direction: row;
+}
 .navlink {
   font-weight: lighter;
   font-style: none;
@@ -31,6 +34,11 @@
   fill: white;
 }
 
+@media (min-width: $mantine-breakpoint-sm) {
+  .navContainer {
+    flex-direction: column;
+  }
+}
 @media (min-width: $mantine-breakpoint-md) {
   .navlink > span {
     display: inline;

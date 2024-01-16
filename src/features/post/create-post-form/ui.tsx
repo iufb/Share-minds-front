@@ -1,9 +1,9 @@
 import {
   Avatar,
+  Box,
   Button,
   Grid,
   Group,
-  Stack,
   Textarea,
   TextareaProps,
 } from "@mantine/core";
@@ -43,14 +43,14 @@ export const CreatePostForm = () => {
   };
   return (
     <Grid component="form" px={10} onSubmit={handleSubmit} maw={640}>
-      <Grid.Col span={1}>
+      <Grid.Col span={2}>
         <Avatar />
       </Grid.Col>
-      <Grid.Col className={styles["right"]} span={11}>
+      <Grid.Col className={styles["right"]} span={10}>
         <ContentInput disabled={pending} />
         <FileInput onChange={handleChange} disabled={img?.length === 4} />
 
-        <Group>
+        <Group className={styles["previewContainer"]}>
           {readedFiles &&
             readedFiles.map((file) => {
               return (
