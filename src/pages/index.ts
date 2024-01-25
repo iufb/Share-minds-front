@@ -4,7 +4,17 @@ import { SigninRoute } from "src/pages/signin";
 import { SignupRoute } from "src/pages/signup";
 import { HomeRoute } from "src/pages/home";
 import { ExploreRoute } from "src/pages/explore";
+import { PostRoute } from "src/pages/post";
+import { ProfileRoute } from "src/pages/profile";
 
 export const RoutesView = createRoutesView({
-  routes: [AccessHubRoute, SignupRoute, SigninRoute, HomeRoute, ExploreRoute],
+  routes: [
+    AccessHubRoute,
+    SignupRoute,
+    SigninRoute,
+    HomeRoute,
+    ExploreRoute,
+    PostRoute,
+    ProfileRoute,
+  ],
 });

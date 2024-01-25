@@ -22,6 +22,7 @@
   background: var(--mantine-color-dark-blue-9);
 }
 .main {
+  max-width: var(--max-width-main);
   flex-grow: 1;
   padding-right: 5px;
   min-height: 100vh;

@@ -1,9 +1,11 @@
 import { createEffect } from "effector";
-import { User } from "src/shared/api/auth";
+import { UserFullData } from "src/shared/api/user";
 import { requestFx } from "src/shared/utils";
-export interface Post {
+export interface PostType {
   id: number;
-  author: User;
+  author: UserFullData;
+  isLiked: boolean;
+  likesCount: number;
   content: string;
   images: string[];
 }
@@ -27,9 +29,34 @@ export const createPostFx = createEffect<
     body: { multipart: form },
   });
 });
-export const getPostsFx = createEffect<void, Post[], PostError>(() =>
+export const getPostsFx = createEffect<void, PostType[], PostError>(() =>
   requestFx({
     path: "posts",
     method: "GET",
   }),
+);
+interface LikePostRequest {
+  likeFor: string;
+  sourceId: number;
+}
+interface UnlikePostRequest {
+  likeFor: string;
+  sourceId: number;
+}
+
+interface LikePostResponse {
+  userId: number;
+  postId: number;
+}
+
+export const likePostFx = createEffect<LikePostRequest, LikePostResponse>(
+  (body) => requestFx({ path: "likes", method: "POST", body: { json: body } }),
+);
+export const unlikePostFx = createEffect<UnlikePostRequest, LikePostResponse>(
+  ({ likeFor, sourceId }) =>
+    requestFx({
+      path: `likes/${sourceId}`,
+      method: "DELETE",
+      query: { likeFor },
+    }),
 );

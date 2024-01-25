@@ -100,9 +100,9 @@ sample({
   filter: and($formValid, not($formPending)),
   fn: ({ user, content }) => {
     const formdata = new FormData();
-    formdata.append("post", JSON.stringify({ authorId: user.userId, content }));
+    formdata.append("post", JSON.stringify({ authorId: user.id, content }));
     $selectedFiles.$value.map((files) => {
-      if (!files) return;
+      if (!files) return files;
       files.map((file) => formdata.append("files", file));
     });
     return formdata;

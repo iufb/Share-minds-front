@@ -5,7 +5,6 @@ import {
   chainRoute,
 } from "atomic-router";
 import { Effect, attach, createEvent, createStore, sample } from "effector";
-import { debug } from "patronum";
 import * as api from "src/shared/api/auth";
 
 enum AuthStatus {
@@ -29,13 +28,13 @@ $user.on(sessionRequestFx.doneData, (_, user) => user);
 $authenticationStatus.on(sessionRequestFx.done, () => AuthStatus.Authenticated);
 
 $authenticationStatus.on(sessionRequestFx.fail, () => AuthStatus.Anonymous);
-interface ChainParams<Params extends RouteParams> {
-  otherwise?: Effect<void, RouteParamsAndQuery<Params>, any>;
+
+interface ChainParams {
+  otherwise?: Effect<void, RouteParamsAndQuery<RouteParams>, any>;
 }
-debug($authenticationStatus);
 export function chainAuthorized<Params extends RouteParams>(
   route: RouteInstance<Params>,
-  { otherwise }: ChainParams<Params> = {},
+  { otherwise }: ChainParams,
 ): RouteInstance<Params> {
   const sessionCheckStarted = createEvent<RouteParamsAndQuery<Params>>();
   const sessionReceivedAnonymous = createEvent<RouteParamsAndQuery<Params>>();

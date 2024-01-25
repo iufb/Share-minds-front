@@ -1,3 +1,7 @@
+.link {
+  text-decoration: none;
+  color: unset;
+}
 .avatar {
   display: flex;
   justify-content: center;
@@ -5,6 +9,7 @@
 .imagesContainer {
   display: grid;
   border-radius: 20px;
+  margin-bottom: 20px;
   overflow: hidden;
   gap: 1px;
   grid-template-columns: 1fr 1fr;

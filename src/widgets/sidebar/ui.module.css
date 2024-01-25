@@ -32,6 +32,7 @@
 .active {
   font-weight: bold;
   fill: white;
+  color: var(--mantine-color-light-blue-1);
 }
 
 @media (min-width: $mantine-breakpoint-sm) {

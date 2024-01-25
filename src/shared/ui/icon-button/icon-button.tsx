@@ -3,7 +3,7 @@ import styles from "./icon-button.module.css";
 import clsx from "clsx";
 type IconButtonType = {
   icon: ReactNode;
-  variant?: "close" | "base";
+  variant?: "close" | "base" | "like";
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 export const IconButton = ({
   icon,
@@ -18,6 +18,7 @@ export const IconButton = ({
         {
           base: styles["base"],
           close: styles["close"],
+          like: styles["like"],
         }[variant],
       )}
       {...props}

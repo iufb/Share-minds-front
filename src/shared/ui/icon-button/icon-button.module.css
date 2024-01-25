@@ -34,6 +34,19 @@
 .base > svg:hover {
   color: var(--mantine-color-light-blue-4);
 }
+.like {
+  background: inherit;
+}
+.like > svg {
+  color: var(--mantine-color-red-4);
+}
+
+.like:hover {
+  background: rgba(var(--rgb-red-color), 0.1);
+}
+.like > svg:hover {
+  color: var(--mantine-color-red-4);
+}
 .close {
   background: rgba(0, 0, 0, 0.6);
   color: white;

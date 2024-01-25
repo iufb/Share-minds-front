@@ -18,11 +18,12 @@ export const routes = {
   explore: createRoute(),
   bookmarks: createRoute(),
   profile: createRoute(),
+  post: createRoute(),
 };
 
 const routesMap: UnmappedRouteObject<any>[] = [
   {
-    path: "/",
+    path: "/access",
     route: routes.accessHub,
   },
   {
@@ -46,8 +47,12 @@ const routesMap: UnmappedRouteObject<any>[] = [
     route: routes.bookmarks,
   },
   {
-    path: "/profile",
+    path: "/profile/:id",
     route: routes.profile,
+  },
+  {
+    path: "/post/:id",
+    route: routes.post,
   },
 ];
 export const controls = createRouterControls();

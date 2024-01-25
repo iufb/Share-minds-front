@@ -1,0 +1,10 @@
+.cover {
+  object-fit: cover;
+  max-height: 200px;
+}
+.noCover {
+  background: var(--mantine-color-black);
+  height: 200px;
+}
+.avatar {
+}

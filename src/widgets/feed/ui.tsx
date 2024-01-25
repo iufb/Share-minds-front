@@ -1,14 +1,25 @@
 import { Center, Loader, Stack } from "@mantine/core";
 import { useList, useUnit } from "effector-react";
 import { PostView } from "src/entities/post";
-import { CreatePostForm } from "src/features/post";
+import { CreatePostForm, LikePostButton } from "src/features/post";
 import { $pending, $posts } from "src/widgets/feed/model";
-
 export const Feed = () => {
   const pending = useUnit($pending);
   const posts = useList($posts, {
     getKey: ({ id }) => id,
-    fn: (post) => <PostView post={post} />,
+    fn: (post) => (
+      <PostView
+        post={post}
+        controlButtons={[
+          <LikePostButton
+            key={"likeButton"}
+            postId={post.id}
+            likesCount={post.likesCount}
+            isLiked={post.isLiked}
+          />,
+        ]}
+      />
+    ),
   });
   return (
     <Stack maw={"100%"}>

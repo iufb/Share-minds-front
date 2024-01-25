@@ -1,0 +1,22 @@
+.tab {
+  position: relative;
+  &[data-active] {
+    border-bottom: none;
+  }
+  &[data-active]::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 56px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--mantine-color-light-blue-4);
+  }
+}
+.tab:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+.list ::before {
+  content: none;
+  height: 0;
+}

@@ -8,4 +8,6 @@ body {
 }
 :root {
   --rgb-blue-color: 0, 118, 193;
+  --rgb-red-color: 240, 24, 92;
+  --max-width-main: 600px;
 }
