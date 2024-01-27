@@ -1,9 +1,10 @@
 import { useUnit } from "effector-react";
-import { UserInfo } from "src/entities/user";
-import { $userInfo } from "src/pages/profile/model";
+import { EditProfileButton, UserInfo } from "src/entities/user";
+import { $isCurrentUser, $userInfo } from "src/pages/profile/model";
 import { BaseLayout } from "src/shared/ui";
 import { Sidebar } from "src/widgets/sidebar";
 import { UserContent } from "src/widgets/profile/user-content";
+import { EditProfileForm } from "src/features/user";
 export const ProfilePage = () => {
   return (
     <BaseLayout
@@ -14,10 +15,18 @@ export const ProfilePage = () => {
   );
 };
 function ProfileContent() {
-  const user = useUnit($userInfo);
+  const isCurrentUser = useUnit($isCurrentUser);
   return (
     <>
-      <UserInfo user={user} actionButton={<div>Follow</div>} />
+      <UserInfo
+        actionButton={
+          isCurrentUser ? (
+            <EditProfileButton editForm={<EditProfileForm />} />
+          ) : (
+            <div>Follow</div>
+          )
+        }
+      />
       <UserContent />
     </>
   );

@@ -1,19 +1,15 @@
-import {
-  attach,
-  createEffect,
-  createEvent,
-  createStore,
-  sample,
-} from "effector";
+import { attach, createEvent, createStore, sample } from "effector";
 import { and, every, not, reset } from "patronum";
-import { User } from "src/shared/api/auth";
 import * as api from "src/shared/api/post";
+import * as utils from "src/shared/utils";
+import { User } from "src/shared/api/user";
 import { $user } from "src/shared/session";
 import { createField } from "src/shared/utils";
 
 export const createPostFx = attach({ effect: api.createPostFx });
+const readFileFx = attach({ effect: utils.readFileFx });
 export const formSubmited = createEvent();
-export const closeButtonClicked = createEvent<ReadedFilesType>();
+export const closeButtonClicked = createEvent<utils.ReadedFilesType>();
 
 export const contentField = createField({
   defaultValue: "",
@@ -48,29 +44,6 @@ $selectedFilesSrc.on(closeButtonClicked, (list, src) => {
   const filtered = list.filter((f) => f !== src);
   return filtered;
 });
-
-type ReadedFilesType = {
-  src: string;
-  file: File;
-};
-const readFileFx = createEffect<File[], ReadedFilesType[], Error>(
-  (files: File[]) => {
-    const readedFiles: Promise<ReadedFilesType>[] = files.map((file: File) => {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const result = e.target?.result;
-          if (typeof result == "string") resolve({ src: result, file });
-        };
-        reader.onerror = (e) => {
-          reject(e.target?.error);
-        };
-        reader.readAsDataURL(file);
-      });
-    });
-    return Promise.all(readedFiles);
-  },
-);
 
 sample({
   clock: $selectedFiles.changed,

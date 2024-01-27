@@ -6,6 +6,31 @@ import {
   Event,
 } from "effector";
 
+export const getImgUrl = (params?: string | null) =>
+  `${import.meta.env.VITE_BASE_URL}/${params}`;
+export type ReadedFilesType = {
+  src: string;
+  file: File;
+};
+export const readFileFx = createEffect<File[], ReadedFilesType[], Error>(
+  (files: File[]) => {
+    const readedFiles: Promise<ReadedFilesType>[] = files.map((file: File) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const result = e.target?.result;
+          if (typeof result == "string") resolve({ src: result, file });
+        };
+        reader.onerror = (e) => {
+          reject(e.target?.error);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+    return Promise.all(readedFiles);
+  },
+);
+
 interface ICreateField<Value, Error> {
   defaultValue: Value;
   validate?: {

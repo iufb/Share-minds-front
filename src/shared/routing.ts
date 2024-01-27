@@ -17,8 +17,8 @@ export const routes = {
   home: createRoute(),
   explore: createRoute(),
   bookmarks: createRoute(),
-  profile: createRoute(),
-  post: createRoute(),
+  profile: createRoute<{ id: number }>(),
+  post: createRoute<{ id: number }>(),
 };
 
 const routesMap: UnmappedRouteObject<any>[] = [

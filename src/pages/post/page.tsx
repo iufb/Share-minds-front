@@ -1,4 +1,7 @@
-import { routes } from "src/shared/routing";
+import { useUnit } from "effector-react";
+import { PostView } from "src/entities/post";
+import { LikePostButton } from "src/features/post";
+import { $post, authorizedRoute } from "src/pages/post/model";
 import { BaseLayout } from "src/shared/ui";
 import { Sidebar } from "src/widgets/sidebar";
 export const PostPage = () => {
@@ -6,15 +9,25 @@ export const PostPage = () => {
     <BaseLayout
       sidebar={<Sidebar />}
       header={<div>Header</div>}
-      main={
-        <div>
-          Post <Main />
-        </div>
-      }
+      main={<Main />}
     />
   );
 };
 function Main() {
-  const { id } = routes.post.$params.getState();
-  return <div>{id}</div>;
+  const post = useUnit($post);
+  if (!post) return;
+  return (
+    <PostView
+      layout="post"
+      post={post}
+      controlButtons={[
+        <LikePostButton
+          key={"likeButton"}
+          postId={post.id}
+          likesCount={post.likesCount}
+          isLiked={post.isLiked}
+        />,
+      ]}
+    />
+  );
 }

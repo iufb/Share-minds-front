@@ -6,6 +6,7 @@ import {
 } from "atomic-router";
 import { Effect, attach, createEvent, createStore, sample } from "effector";
 import * as api from "src/shared/api/auth";
+import { User } from "src/shared/api/user";
 
 enum AuthStatus {
   Initial,
@@ -16,7 +17,7 @@ enum AuthStatus {
 
 export const sessionRequestFx = attach({ effect: api.getSessionFx });
 
-export const $user = createStore<api.User | null>(null);
+export const $user = createStore<User | null>(null);
 const $authenticationStatus = createStore(AuthStatus.Initial);
 
 $authenticationStatus.on(sessionRequestFx, (status) => {
@@ -25,6 +26,7 @@ $authenticationStatus.on(sessionRequestFx, (status) => {
 });
 
 $user.on(sessionRequestFx.doneData, (_, user) => user);
+$user.watch((u) => console.log(u));
 $authenticationStatus.on(sessionRequestFx.done, () => AuthStatus.Authenticated);
 
 $authenticationStatus.on(sessionRequestFx.fail, () => AuthStatus.Anonymous);
@@ -75,7 +77,7 @@ export function chainAuthorized<Params extends RouteParams>(
 }
 export function chainAnonymous<Params extends RouteParams>(
   route: RouteInstance<Params>,
-  { otherwise }: ChainParams<Params> = {},
+  { otherwise }: ChainParams = {},
 ): RouteInstance<Params> {
   const sessionCheckStarted = createEvent<RouteParamsAndQuery<Params>>();
   const sessionReceivedAuthenticated =

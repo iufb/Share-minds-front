@@ -1,11 +1,9 @@
-import { Store, attach, createStore, sample } from "effector";
+import { createStore, sample } from "effector";
 import { routes } from "src/shared/routing";
-import { chainAuthorized } from "src/shared/session";
-import * as api from "src/shared/api/user";
-const getUserFx = attach({ effect: api.getUserFx });
+import { $user, chainAuthorized } from "src/shared/session";
 export const currentRoute = routes.profile;
 
-export const $userInfo = createStore<api.UserFullData | null>(null);
+export const $isCurrentUser = createStore(false);
 
 export const authorizedRoute = chainAuthorized(currentRoute, {
   otherwise: routes.auth.signin.open,
@@ -13,11 +11,14 @@ export const authorizedRoute = chainAuthorized(currentRoute, {
 
 sample({
   clock: authorizedRoute.opened,
-  source: authorizedRoute.$params as Store<{ id: number }>,
-  target: getUserFx,
+  source: { params: authorizedRoute.$params, user: $user },
+  fn: ({ params, user }) => {
+    if (!user) return false;
+    return params.id === user.id;
+  },
+  target: $isCurrentUser,
 });
 
-$userInfo.on(getUserFx.done, (_, { result }) => result);
 authorizedRoute.opened.watch(() => {
   console.info(`Profile route opened `);
 });

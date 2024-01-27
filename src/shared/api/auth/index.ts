@@ -1,4 +1,5 @@
 import { createEffect } from "effector";
+import { User } from "src/shared/api/user";
 import { requestFx } from "src/shared/utils";
 type ResponseError = {
   error: string;
@@ -46,11 +47,6 @@ export const signUpFx = createEffect<
   });
 });
 
-export type User = {
-  id: number;
-  email: string;
-  username: string;
-};
 export type GetSessionError = ResponseError;
 export const getSessionFx = createEffect<void, User, GetSessionError>(() =>
   requestFx({

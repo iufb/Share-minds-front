@@ -11,3 +11,8 @@ body {
   --rgb-red-color: 240, 24, 92;
   --max-width-main: 600px;
 }
+
+.mantine-Modal-content,
+.mantine-Modal-header {
+  background: var(--mantine-color-dark-blue-9);
+}

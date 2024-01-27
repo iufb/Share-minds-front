@@ -1,10 +1,24 @@
-.link {
+a {
   text-decoration: none;
   color: unset;
 }
 .avatar {
   display: flex;
   justify-content: center;
+}
+.postHeader {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.row {
+  display: flex;
+  gap: 5px;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 }
 .imagesContainer {
   display: grid;

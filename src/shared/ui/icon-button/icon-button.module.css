@@ -57,3 +57,10 @@
 .close:hover {
   background: rgba(0, 0, 0, 0.4);
 }
+.transparent {
+  background: black;
+  backdrop-filter: blur 10px;
+}
+.transparent > svg {
+  color: var(--mantine-color-white);
+}

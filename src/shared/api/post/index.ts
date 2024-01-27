@@ -1,9 +1,9 @@
 import { createEffect } from "effector";
-import { UserFullData } from "src/shared/api/user";
+import { User } from "src/shared/api/user";
 import { requestFx } from "src/shared/utils";
 export interface PostType {
   id: number;
-  author: UserFullData;
+  author: User;
   isLiked: boolean;
   likesCount: number;
   content: string;
@@ -34,6 +34,9 @@ export const getPostsFx = createEffect<void, PostType[], PostError>(() =>
     path: "posts",
     method: "GET",
   }),
+);
+export const getPostFx = createEffect<number, PostType, PostError>((id) =>
+  requestFx({ path: `posts/${id}`, method: "GET" }),
 );
 interface LikePostRequest {
   likeFor: string;

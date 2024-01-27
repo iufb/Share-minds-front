@@ -1,19 +1,30 @@
 import { createEffect } from "effector";
-import { User } from "src/shared/api/auth";
 import { requestFx } from "src/shared/utils";
-export type UserFullData = User & {
+export type User = {
+  id: number;
+  email: string;
+  username: string;
   cover?: string;
   avatar?: string;
   createdAt: string;
   bio?: string;
 };
-export const getUserFx = createEffect<
-  { id: number },
-  UserFullData,
-  { status: number; error: string; message: string }
->(({ id }) =>
+type UserError = { status: number; error: string; message: string };
+export const getUserFx = createEffect<{ id: number }, User, UserError>(
+  ({ id }) =>
+    requestFx({
+      path: `users/${id}`,
+      method: "GET",
+    }),
+);
+export const editUserFx = createEffect<
+  { data: FormData; id: number },
+  User,
+  UserError
+>(({ data, id }) =>
   requestFx({
     path: `users/${id}`,
-    method: "GET",
+    method: "PATCH",
+    body: { multipart: data },
   }),
 );

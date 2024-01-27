@@ -2,21 +2,18 @@ import { Avatar, Box, Group, Stack, Text, Title } from "@mantine/core";
 import { ReactNode } from "react";
 import { User } from "src/shared/api/user";
 import styles from "./ui.module.css";
-import { getImgUrl } from "src/shared/utils";
-import { useUnit } from "effector-react";
-import { $user } from "src/shared/session";
 type UserInfoType = {
+  user: User | null;
   actionButton: ReactNode;
 };
-export const UserInfo = ({ actionButton }: UserInfoType) => {
-  const user = useUnit($user);
+export const UserInfo = ({ user, actionButton }: UserInfoType) => {
   if (!user) return;
   const { avatar, cover, username, email, bio } = user;
   return (
     <Stack className={styles["wrapper"]}>
       {cover ? (
         <Box
-          src={getImgUrl(cover)}
+          src={import.meta.env.VITE_BASE_URL + `/${cover}`}
           component="img"
           alt="cover"
           className={styles["cover"]}
@@ -25,7 +22,11 @@ export const UserInfo = ({ actionButton }: UserInfoType) => {
         <Box className={styles["noCover"]} />
       )}
       <Group w="100%" mt={"-100px"} px={5} justify="space-between">
-        <Avatar color="light-blue.9" size={150} src={getImgUrl(avatar)} />
+        <Avatar
+          color="light-blue.9"
+          size={150}
+          src={import.meta.env.VITE_BASE_URL + `/${avatar}`}
+        />
         {actionButton}
       </Group>
       <Stack px={15} gap={2}>
@@ -34,9 +35,7 @@ export const UserInfo = ({ actionButton }: UserInfoType) => {
           @{email.split("@")[0]}
         </Text>
       </Stack>
-      <Text ml={5} size="sm">
-        {bio}
-      </Text>
+      <Text size="md">{bio}</Text>
     </Stack>
   );
 };
