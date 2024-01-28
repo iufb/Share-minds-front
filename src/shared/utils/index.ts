@@ -5,6 +5,7 @@ import {
   sample,
   Event,
 } from "effector";
+import { reset } from "patronum";
 
 export const getImgUrl = (params?: string | null) =>
   `${import.meta.env.VITE_BASE_URL}/${params}`;
@@ -12,24 +13,34 @@ export type ReadedFilesType = {
   src: string;
   file: File;
 };
-export const readFileFx = createEffect<File[], ReadedFilesType[], Error>(
-  (files: File[]) => {
-    const readedFiles: Promise<ReadedFilesType>[] = files.map((file: File) => {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const result = e.target?.result;
-          if (typeof result == "string") resolve({ src: result, file });
-        };
-        reader.onerror = (e) => {
-          reject(e.target?.error);
-        };
-        reader.readAsDataURL(file);
-      });
-    });
+export interface CroppedImageType {
+  dataUrl: string;
+  blob: Blob;
+}
+const getFileSrc = (file: File): Promise<ReadedFilesType> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result;
+      if (typeof result == "string") resolve({ src: result, file });
+    };
+    reader.onerror = (e) => {
+      reject(e.target?.error);
+    };
+    reader.readAsDataURL(file);
+  });
+};
+export const readFileFx = createEffect<
+  File[] | File,
+  ReadedFilesType[] | ReadedFilesType,
+  Error
+>((data) => {
+  if (Array.isArray(data)) {
+    const readedFiles = data.map(getFileSrc);
     return Promise.all(readedFiles);
-  },
-);
+  }
+  return getFileSrc(data);
+});
 
 interface ICreateField<Value, Error> {
   defaultValue: Value;
@@ -60,6 +71,30 @@ export function createField<Value, Error>(options: ICreateField<Value, Error>) {
   }
   return { $value, $error, changed };
 }
+
+//Crop image factory
+export const getCroppedImage = () => {
+  const $selectedImage = createStore<string | null>(null);
+  const $croppedImage = createStore<CroppedImageType | null>(null);
+  const newImageSelected = createEvent<File>();
+  const newImageCropped = createEvent<CroppedImageType>();
+  sample({
+    clock: newImageSelected,
+    target: readFileFx,
+  });
+  $selectedImage.on(readFileFx.doneData, (_, data) => {
+    if (Array.isArray(data)) return;
+    return data.src;
+  });
+  $croppedImage.on(newImageCropped, (_, data) => data);
+  $selectedImage.on(newImageCropped, () => null);
+  return {
+    $selectedImage,
+    $croppedImage,
+    selected: newImageSelected,
+    cropped: newImageCropped,
+  };
+};
 
 interface Request {
   path: string;

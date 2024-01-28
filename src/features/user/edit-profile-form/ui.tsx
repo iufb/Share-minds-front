@@ -1,5 +1,6 @@
 import {
   Avatar,
+  BackgroundImage,
   Box,
   Button,
   Input,
@@ -17,12 +18,30 @@ import {
   $formPending,
   username,
   formSubmited,
+  cover,
+  $cropModalOpened,
+  avatar,
+  cropModalClosed,
 } from "src/features/user/edit-profile-form/model";
-import { FormEventHandler, useEffect } from "react";
-import { FileInput } from "src/shared/ui";
+import { ChangeEventHandler, FormEventHandler, useEffect } from "react";
+import { FileInput, ImageCrop } from "src/shared/ui";
 
 export const EditProfileForm = () => {
-  const formIsLoading = useUnit($formPending);
+  const [
+    formIsLoading,
+    newCover,
+    croppedCover,
+    newAvatar,
+    croppedAvatar,
+    cropModalOpened,
+  ] = useUnit([
+    $formPending,
+    cover.$selectedImage,
+    cover.$croppedImage,
+    avatar.$selectedImage,
+    avatar.$croppedImage,
+    $cropModalOpened,
+  ]);
   useEffect(() => {
     formMounted();
   }, []);
@@ -30,6 +49,7 @@ export const EditProfileForm = () => {
     e.preventDefault();
     formSubmited();
   };
+
   return (
     <>
       <Stack component="form" onSubmit={handleSubmit}>
@@ -40,36 +60,76 @@ export const EditProfileForm = () => {
           Save
         </Button>
       </Stack>
-      <Modal opened={true} centered w={600} h={600} onClose={() => {}}>
-        Crop
+      <Modal
+        opened={cropModalOpened}
+        centered
+        size={616}
+        title="Crop image"
+        onClose={cropModalClosed}
+      >
+        {/*TODO!!*/}
+        <ImageCrop
+          srcImage={newCover ? newCover : newAvatar ?? ""}
+          cropWidth={!croppedCover ? 550 : 499}
+          cropHeight={!croppedCover ? 183 : 499}
+          imageCropped={!croppedCover ? cover.cropped : avatar.cropped}
+        />
       </Modal>
     </>
   );
 };
 const FormImages = () => {
-  const user = useUnit($user);
+  const [user, newCroppedCover, newCroppedAvatar] = useUnit([
+    $user,
+    cover.$croppedImage,
+    avatar.$croppedImage,
+  ]);
+  const changeCover: ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (e.target.files) {
+      const newCover = Array.from(e.target.files)[0];
+      cover.selected(newCover);
+    }
+  };
+  const changeAvatar: ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (e.target.files) {
+      const newAvatar = Array.from(e.target.files)[0];
+      avatar.selected(newAvatar);
+    }
+  };
+
   return (
     <Stack>
       <Box className={styles["coverWrapper"]}>
         <Box
           component="img"
           className={styles["cover"]}
-          src={getImgUrl(user?.cover)}
+          src={
+            newCroppedCover ? newCroppedCover.dataUrl : getImgUrl(user?.cover)
+          }
         />
         <FileInput
+          onChange={changeCover}
           size="lg"
           variant="transparent"
-          className={styles["coverFileInput"]}
+          className={styles["fileInput"]}
         />
       </Box>
-      <Box>
-        <Avatar
-          src={getImgUrl(user?.avatar)}
-          size={120}
-          mt={-90}
-          className={styles["avatar"]}
+      <BackgroundImage
+        src={
+          newCroppedAvatar ? newCroppedAvatar.dataUrl : getImgUrl(user?.avatar)
+        }
+        w={120}
+        h={120}
+        mt={-90}
+        className={styles.avatar}
+      >
+        <FileInput
+          onChange={changeAvatar}
+          size="md"
+          variant="transparent"
+          className={styles["fileInput"]}
         />
-      </Box>
+      </BackgroundImage>
     </Stack>
   );
 };

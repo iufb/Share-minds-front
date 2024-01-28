@@ -22,10 +22,12 @@
     "history": "^5.3.0",
     "patronum": "^2.1.1",
     "react": "^18.2.0",
+    "react-avatar-editor": "^13.0.2",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.36",
+    "@types/react-avatar-editor": "^13",
     "@types/react-dom": "^18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
