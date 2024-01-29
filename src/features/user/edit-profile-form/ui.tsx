@@ -22,25 +22,26 @@ import {
   $cropModalOpened,
   avatar,
   cropModalClosed,
+  $imageSelectedFor,
+  $submitButtonDisabled,
 } from "src/features/user/edit-profile-form/model";
 import { ChangeEventHandler, FormEventHandler, useEffect } from "react";
 import { FileInput, ImageCrop } from "src/shared/ui";
-
 export const EditProfileForm = () => {
   const [
     formIsLoading,
     newCover,
-    croppedCover,
     newAvatar,
-    croppedAvatar,
+    imageSelectedFor,
     cropModalOpened,
+    submitButtonDisabled,
   ] = useUnit([
     $formPending,
     cover.$selectedImage,
-    cover.$croppedImage,
     avatar.$selectedImage,
-    avatar.$croppedImage,
+    $imageSelectedFor,
     $cropModalOpened,
+    $submitButtonDisabled,
   ]);
   useEffect(() => {
     formMounted();
@@ -56,7 +57,13 @@ export const EditProfileForm = () => {
         <FormImages />
         <UsernameInput />
         <BioTextarea />
-        <Button loading={formIsLoading} bg={"white"} c="black" type="submit">
+        <Button
+          loading={formIsLoading}
+          disabled={submitButtonDisabled}
+          bg={"white"}
+          c="black"
+          type="submit"
+        >
           Save
         </Button>
       </Stack>
@@ -69,10 +76,12 @@ export const EditProfileForm = () => {
       >
         {/*TODO!!*/}
         <ImageCrop
-          srcImage={newCover ? newCover : newAvatar ?? ""}
-          cropWidth={!croppedCover ? 550 : 499}
-          cropHeight={!croppedCover ? 183 : 499}
-          imageCropped={!croppedCover ? cover.cropped : avatar.cropped}
+          srcImage={imageSelectedFor === "cover" ? newCover : newAvatar}
+          cropWidth={imageSelectedFor === "cover" ? 550 : 499}
+          cropHeight={imageSelectedFor === "cover" ? 183 : 499}
+          imageCropped={
+            imageSelectedFor === "cover" ? cover.cropped : avatar.cropped
+          }
         />
       </Modal>
     </>

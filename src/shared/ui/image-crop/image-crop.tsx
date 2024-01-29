@@ -3,7 +3,7 @@ import { EventCallable } from "effector";
 import { FC, useRef, useState } from "react";
 import AvatarEditor from "react-avatar-editor";
 interface ImageCropProps {
-  srcImage: string;
+  srcImage: string | null;
   cropWidth: number;
   cropHeight: number;
   imageCropped: EventCallable<{ dataUrl: string; blob: Blob }>;
@@ -20,7 +20,7 @@ export const ImageCrop: FC<ImageCropProps> = ({
     <Stack align="center">
       <AvatarEditor
         ref={editor}
-        image={srcImage}
+        image={srcImage ?? ""}
         width={cropWidth}
         height={cropHeight}
         crossOrigin={"use-credentials"}

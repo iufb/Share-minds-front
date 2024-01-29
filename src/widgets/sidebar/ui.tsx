@@ -11,6 +11,10 @@ import styles from "./ui.module.css";
 import clsx from "clsx";
 import { useUnit } from "effector-react";
 import { $user } from "src/shared/session";
+import { RouteInstance, RouteParams } from "atomic-router";
+import { FC } from "react";
+import { CreatePostButton } from "src/entities/post/create-post-button/ui";
+import { CreatePostForm } from "src/features/post";
 const navlinks = [
   {
     leftSection: (active: boolean) => (
@@ -49,25 +53,34 @@ export const Sidebar = () => {
           <Navlink
             key={name}
             leftSection={leftSection}
-            path={path}
+            path={path as unknown as RouteInstance<RouteParams>}
             name={name}
           />
         ))}
       </Stack>
+
+      <CreatePostButton createPostForm={<CreatePostForm />} />
     </Stack>
   );
 };
-const Navlink = ({ leftSection, path, name }: (typeof navlinks)[0]) => {
+interface NavlinkProps {
+  leftSection: (active: boolean) => JSX.Element;
+  path: RouteInstance<RouteParams>;
+  name: string;
+}
+const Navlink: FC<NavlinkProps> = ({ leftSection, path, name }) => {
   const [isOpened, user] = useUnit([path.$isOpened, $user]);
   return (
     <Link
-      to={path}
+      to={path as RouteInstance<RouteParams>}
       activeClassName={!(name == "Profile") ? styles["active"] : ""}
       className={styles["navlink"]}
       params={
-        name == "Profile" && {
-          id: user?.id,
-        }
+        name == "Profile"
+          ? {
+              id: user?.id,
+            }
+          : undefined
       }
       key={name}
     >

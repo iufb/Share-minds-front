@@ -19,7 +19,7 @@ export const PostView: FC<PostViewProps> = ({
 }) => {
   const isFeed = layout === "feed";
   return (
-    <Grid mx={isFeed ? 5 : 20}>
+    <Grid className={styles["wrapper"]} px={isFeed ? 5 : 20}>
       {isFeed && (
         <Grid.Col span={2} className={styles["avatar"]}>
           <Link
@@ -34,11 +34,15 @@ export const PostView: FC<PostViewProps> = ({
       )}
       <Grid.Col span={isFeed ? 10 : 12}>
         <PostHeader post={post} isFeed={isFeed} layout={layout} />
-        <Link to={routes.post} params={{ id: post.id }}>
-          <Box>{post.content}</Box>
-        </Link>
+        {isFeed ? (
+          <Link to={routes.post} params={{ id: post.id }}>
+            <Box my={10}>{post.content}</Box>
+          </Link>
+        ) : (
+          <Box my={10}>{post.content}</Box>
+        )}
         <ImagesView images={post.images} />
-        <PostReactPanel controlButtons={controlButtons} />
+        <PostReactPanel showBorder={!isFeed} controlButtons={controlButtons} />
       </Grid.Col>
     </Grid>
   );

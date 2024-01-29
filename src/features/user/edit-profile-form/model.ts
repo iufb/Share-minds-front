@@ -5,7 +5,6 @@ import * as api from "src/shared/api/user";
 import * as utils from "src/shared/utils";
 import { reset } from "patronum";
 const editUserFx = attach({ effect: api.editUserFx });
-const readFileFx = attach({ effect: utils.readFileFx });
 //stores
 export const username = utils.createField({ defaultValue: "" });
 export const bio = utils.createField({ defaultValue: "" });
@@ -14,6 +13,14 @@ export const avatar = utils.getCroppedImage();
 const $userId = $user.map((user) => (user ? user.id : null));
 export const $formPending = editUserFx.pending;
 export const $cropModalOpened = createStore(false);
+export const $imageSelectedFor = createStore<"avatar" | "cover">("cover");
+$imageSelectedFor.on(avatar.selected, () => "avatar");
+$imageSelectedFor.on(cover.selected, () => "cover");
+export const $submitButtonDisabled = createStore(true);
+$submitButtonDisabled.on(
+  [avatar.cropped, cover.cropped, username.changed, bio.changed],
+  () => false,
+);
 //events
 export const formMounted = createEvent();
 export const formSubmited = createEvent();
@@ -63,13 +70,19 @@ sample({
   filter: (source: Source): source is ValidFormValues => !!source.id,
   fn: ({ username, bio, id }) => {
     const formdata = new FormData();
-    avatar.$croppedImage.map((avatar) => {
-      if (cover) formdata.append("avatar", avatar.blob);
-    });
+    avatar.$croppedImage.map(
+      (avatar) => {
+        if (avatar) formdata.append("avatar", avatar.blob);
+      },
+      { skipVoid: false },
+    );
 
-    cover.$croppedImage.map((cover) => {
-      if (cover) formdata.append("cover", cover.blob);
-    });
+    cover.$croppedImage.map(
+      (cover) => {
+        if (cover) formdata.append("cover", cover.blob);
+      },
+      { skipVoid: false },
+    );
     formdata.append("user", JSON.stringify({ username, bio }));
     return { data: formdata, id };
   },
@@ -77,3 +90,15 @@ sample({
 });
 
 $user.on(editUserFx.done, (_, { result }) => result);
+//cases:
+//1)
+//1.Modal opened.
+//2.Modal closed.
+//2)
+//1.Modal opened.
+//2.Cover selected.
+//3.Crop modal closed.
+//3)
+//1.Modal opened.
+//2.Cover selected.
+//3.Image cropped.

@@ -26,7 +26,6 @@ $authenticationStatus.on(sessionRequestFx, (status) => {
 });
 
 $user.on(sessionRequestFx.doneData, (_, user) => user);
-$user.watch((u) => console.log(u));
 $authenticationStatus.on(sessionRequestFx.done, () => AuthStatus.Authenticated);
 
 $authenticationStatus.on(sessionRequestFx.fail, () => AuthStatus.Anonymous);

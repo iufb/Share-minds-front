@@ -18,8 +18,11 @@ import {
 } from "./model";
 import { ChangeEventHandler, FormEventHandler } from "react";
 import { FileInput, ImagePreview } from "src/shared/ui";
+import { $user } from "src/shared/session";
+import { getImgUrl } from "src/shared/utils";
 export const CreatePostForm = () => {
-  const [pending, img, readedFiles] = useUnit([
+  const [user, pending, img, readedFiles] = useUnit([
+    $user,
     $formPending,
     $selectedFiles.$value,
     $selectedFilesSrc,
@@ -41,13 +44,30 @@ export const CreatePostForm = () => {
     }
   };
   return (
-    <Grid component="form" px={10} onSubmit={handleSubmit} maw={640}>
+    <Grid
+      className={styles["wrapper"]}
+      component="form"
+      px={10}
+      onSubmit={handleSubmit}
+      maw={640}
+    >
       <Grid.Col span={2}>
-        <Avatar />
+        <Avatar src={getImgUrl(user?.avatar)} />
       </Grid.Col>
       <Grid.Col className={styles["right"]} span={10}>
         <ContentInput disabled={pending} />
-        <FileInput onChange={handleChange} disabled={img?.length === 4} />
+        <Group className={styles["footer"]}>
+          <FileInput onChange={handleChange} disabled={img?.length === 4} />
+          <Button
+            type="submit"
+            maw={"fit-content"}
+            className={styles["postButton"]}
+            radius={"30px"}
+            loading={pending}
+          >
+            Post
+          </Button>
+        </Group>
 
         <Group className={styles["previewContainer"]}>
           {readedFiles &&
@@ -65,15 +85,6 @@ export const CreatePostForm = () => {
               );
             })}
         </Group>
-        <Button
-          type="submit"
-          maw={"fit-content"}
-          className={styles["postButton"]}
-          radius={"30px"}
-          loading={pending}
-        >
-          Post
-        </Button>
       </Grid.Col>
     </Grid>
   );

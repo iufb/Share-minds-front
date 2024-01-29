@@ -5,7 +5,6 @@ import {
   sample,
   Event,
 } from "effector";
-import { reset } from "patronum";
 
 export const getImgUrl = (params?: string | null) =>
   `${import.meta.env.VITE_BASE_URL}/${params}`;

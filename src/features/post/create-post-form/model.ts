@@ -33,7 +33,9 @@ const $formValid = every({
 });
 export const $formPending = createPostFx.pending;
 
-export const $selectedFilesSrc = createStore<ReadedFilesType[] | null>(null);
+export const $selectedFilesSrc = createStore<utils.ReadedFilesType[] | null>(
+  null,
+);
 $selectedFiles.$value.on(closeButtonClicked, (list, file) => {
   if (!list) return null;
   const filtered = list.filter((f) => f.name !== file.file.name);
@@ -52,7 +54,9 @@ sample({
   target: readFileFx,
 });
 
-$selectedFilesSrc.on(readFileFx.doneData, (_, readedFiles) => readedFiles);
+$selectedFilesSrc.on(readFileFx.doneData, (_, readedFiles) =>
+  Array.isArray(readedFiles) ? readedFiles : null,
+);
 type ValidSource = { user: User; content: string };
 type UnvalidSource = {
   user: null;
@@ -74,10 +78,13 @@ sample({
   fn: ({ user, content }) => {
     const formdata = new FormData();
     formdata.append("post", JSON.stringify({ authorId: user.id, content }));
-    $selectedFiles.$value.map((files) => {
-      if (!files) return files;
-      files.map((file) => formdata.append("files", file));
-    });
+    $selectedFiles.$value.map(
+      (files) => {
+        if (!files) return files;
+        files.map((file) => formdata.append("files", file));
+      },
+      { skipVoid: false },
+    );
     return formdata;
   },
   target: createPostFx,
