@@ -19,32 +19,47 @@ export const PostView: FC<PostViewProps> = ({
 }) => {
   const isFeed = layout === "feed";
   return (
-    <Grid className={styles["wrapper"]} px={isFeed ? 5 : 20}>
-      {isFeed && (
-        <Grid.Col span={2} className={styles["avatar"]}>
-          <Link
-            to={routes.profile}
-            params={{
-              id: post.author.id,
-            }}
-          >
-            <Avatar color="light-blue.9" src={getImgUrl(post.author.avatar)} />
-          </Link>
-        </Grid.Col>
+    <>
+      {post.source && (
+        <PostView
+          post={post.source}
+          controlButtons={controlButtons}
+          layout={layout}
+        />
       )}
-      <Grid.Col span={isFeed ? 10 : 12}>
-        <PostHeader post={post} isFeed={isFeed} layout={layout} />
-        {isFeed ? (
-          <Link to={routes.post} params={{ id: post.id }}>
-            <Box my={10}>{post.content}</Box>
-          </Link>
-        ) : (
-          <Box my={10}>{post.content}</Box>
+      <Grid className={styles["wrapper"]} px={isFeed ? 5 : 20}>
+        {isFeed && (
+          <Grid.Col span={2} className={styles["avatar"]}>
+            <Link
+              to={routes.profile}
+              params={{
+                id: post.author.id,
+              }}
+            >
+              <Avatar
+                color="light-blue.9"
+                src={getImgUrl(post.author.avatar)}
+              />
+            </Link>
+          </Grid.Col>
         )}
-        <ImagesView images={post.images} />
-        <PostReactPanel showBorder={!isFeed} controlButtons={controlButtons} />
-      </Grid.Col>
-    </Grid>
+        <Grid.Col span={isFeed ? 10 : 12}>
+          <PostHeader post={post} isFeed={isFeed} layout={layout} />
+          {isFeed ? (
+            <Link to={routes.post} params={{ id: post.id }}>
+              <Box my={10}>{post.content}</Box>
+            </Link>
+          ) : (
+            <Box my={10}>{post.content}</Box>
+          )}
+          <ImagesView images={post.images} />
+          <PostReactPanel
+            showBorder={!isFeed}
+            controlButtons={controlButtons}
+          />
+        </Grid.Col>
+      </Grid>
+    </>
   );
 };
 interface PostHeaderProps {

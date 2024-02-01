@@ -13,4 +13,5 @@ sample({
   clock: api.createPostFx.doneData,
   target: getPostsFx,
 });
+$posts.watch((p) => console.log(p));
 // $posts.on(createPostFx.doneData, (posts, newPost) => [...posts, newPost]);

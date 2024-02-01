@@ -1,7 +1,8 @@
 import { useUnit } from "effector-react";
 import { PostView } from "src/entities/post";
 import { LikePostButton } from "src/features/post";
-import { $post, authorizedRoute } from "src/pages/post/model";
+import { CreateReplyForm } from "src/features/reply";
+import { $post } from "src/pages/post/model";
 import { BaseLayout } from "src/shared/ui";
 import { Sidebar } from "src/widgets/sidebar";
 export const PostPage = () => {
@@ -17,17 +18,20 @@ function Main() {
   const post = useUnit($post);
   if (!post) return;
   return (
-    <PostView
-      layout="post"
-      post={post}
-      controlButtons={[
-        <LikePostButton
-          key={"likeButton"}
-          postId={post.id}
-          likesCount={post.likesCount}
-          isLiked={post.isLiked}
-        />,
-      ]}
-    />
+    <>
+      <PostView
+        layout="post"
+        post={post}
+        controlButtons={[
+          <LikePostButton
+            key={"likeButton"}
+            postId={post.id}
+            likesCount={post.likesCount}
+            isLiked={post.isLiked}
+          />,
+        ]}
+      />
+      <CreateReplyForm />
+    </>
   );
 }

@@ -6,31 +6,30 @@ import { User } from "src/shared/api/user";
 import { $user } from "src/shared/session";
 import { createField } from "src/shared/utils";
 //effects
-export const createPostFx = attach({ effect: api.createPostFx });
+export const createReplyFx = attach({ effect: api.createPostFx });
 //events
 export const formSubmited = createEvent();
 //stores
-export const contentField = createField({
+export const replyContentField = createField({
   defaultValue: "",
   validate: {
     on: formSubmited,
     fn: (value) => {
       if (value.trim().length == 0) {
-        return "Post content is empty";
+        return "Reply content is empty";
       }
       return null;
     },
   },
-  resetOn: [createPostFx.done],
+  resetOn: [createReplyFx.done],
 });
 const $formValid = every({
-  stores: [contentField.$error],
+  stores: [replyContentField.$error],
   predicate: (status) => status === null,
 });
 export const selectedFiles = utils.getImagePreview();
-selectedFiles.$sources.watch((f) => console.log(f, "PostModel"));
-export const $formPending = createPostFx.pending;
-
+export const $formPending = createReplyFx.pending;
+selectedFiles.$sources.watch((f) => console.log(f, "replyModel"));
 type ValidSource = { user: User; content: string };
 type UnvalidSource = {
   user: null;
@@ -43,7 +42,7 @@ sample({
   source: sample({
     source: {
       user: $user,
-      content: contentField.$value,
+      content: replyContentField.$value,
     },
     filter: (source: Source): source is ValidSource =>
       typeof source.user === "object",
@@ -61,9 +60,9 @@ sample({
     );
     return formdata;
   },
-  target: createPostFx,
+  target: createReplyFx,
 });
 reset({
-  clock: [createPostFx.done],
+  clock: [createReplyFx.done],
   target: [selectedFiles.files.$value, selectedFiles.$sources],
 });

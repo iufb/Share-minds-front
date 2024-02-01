@@ -4,6 +4,9 @@ import { requestFx } from "src/shared/utils";
 export interface PostType {
   id: number;
   author: User;
+  sourceId: number | null;
+  source?: PostType;
+  childPosts: PostType[];
   isLiked: boolean;
   likesCount: number;
   content: string;

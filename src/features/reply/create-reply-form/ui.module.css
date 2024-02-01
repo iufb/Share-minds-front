@@ -1,0 +1,30 @@
+.wrapper {
+  margin-top: 20px;
+  border-bottom: 1px solid gray;
+  padding-bottom: 5px;
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.textarea-input {
+  background: var(--mantine-color-dark-blue-9);
+  color: var(--mantine-color-white);
+  font-size: 20px;
+}
+.textarea-input:focus {
+  font-size: 20px;
+}
+
+.postButton {
+  align-self: end;
+}
+.footer {
+  border-top: 1px solid gray;
+  padding-top: 5px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}

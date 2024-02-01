@@ -1,35 +1,31 @@
 import {
-  Avatar,
-  Button,
   Grid,
+  Avatar,
   Group,
-  Textarea,
+  Button,
   TextareaProps,
+  Textarea,
 } from "@mantine/core";
-import styles from "./ui.module.css";
 import { useUnit } from "effector-react";
+import { FileInput, ImagesPreview } from "src/shared/ui";
+import { getImgUrl } from "src/shared/utils";
+import styles from "./ui.module.css";
 import {
   $formPending,
-  contentField,
   formSubmited,
+  replyContentField,
   selectedFiles,
 } from "./model";
-import { ChangeEventHandler, FormEventHandler } from "react";
-import { FileInput, ImagesPreview } from "src/shared/ui";
 import { $user } from "src/shared/session";
-import { getImgUrl } from "src/shared/utils";
-export const CreatePostForm = () => {
+import { ChangeEventHandler, FormEventHandler } from "react";
+
+export const CreateReplyForm = () => {
   const [user, pending, img, readedFiles] = useUnit([
     $user,
     $formPending,
     selectedFiles.files.$value,
     selectedFiles.$sources,
   ]);
-
-  const handleSubmit: FormEventHandler = (e) => {
-    e.preventDefault();
-    formSubmited();
-  };
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.target.files) {
       const selected = Array.from(e.target.files);
@@ -40,6 +36,11 @@ export const CreatePostForm = () => {
       selectedFiles.files.changed(img.concat(selected));
       e.target.files = null;
     }
+  };
+
+  const handleSubmit: FormEventHandler = (e) => {
+    e.preventDefault();
+    formSubmited();
   };
   return (
     <Grid
@@ -75,21 +76,23 @@ export const CreatePostForm = () => {
   );
 };
 function ContentInput({ ...props }: TextareaProps) {
-  const [value, error] = useUnit([contentField.$value, contentField.$error]);
+  const [value, error] = useUnit([
+    replyContentField.$value,
+    replyContentField.$error,
+  ]);
   return (
     <Textarea
       classNames={{
-        root: styles["textarea-root"],
         input: styles["textarea-input"],
       }}
       className={styles["textarea"]}
-      placeholder="What happening?!"
+      placeholder="Post your reply"
       bg={"dark-blue.9"}
       c="white"
       error={error}
       autosize
       value={value}
-      onChange={(e) => contentField.changed(e.target.value)}
+      onChange={(e) => replyContentField.changed(e.target.value)}
       minRows={2}
       maxRows={5}
       {...props}

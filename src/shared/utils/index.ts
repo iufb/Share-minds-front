@@ -4,6 +4,7 @@ import {
   createEvent,
   sample,
   Event,
+  attach,
 } from "effector";
 
 export const getImgUrl = (params?: string | null) =>
@@ -70,7 +71,38 @@ export function createField<Value, Error>(options: ICreateField<Value, Error>) {
   }
   return { $value, $error, changed };
 }
+//add image to
+export const getImagePreview = () => {
+  const readFiles = attach({ effect: readFileFx });
+  const files = createField<File[] | null, Error>({
+    defaultValue: null,
+  });
+  const $sources = createStore<ReadedFilesType[] | null>(null);
 
+  const closeButtonClicked = createEvent<ReadedFilesType>();
+
+  files.$value.on(closeButtonClicked, (list, file) => {
+    if (!list) return null;
+    const filtered = list.filter((f) => f.name !== file.file.name);
+    return filtered;
+  });
+  $sources.on(closeButtonClicked, (list, src) => {
+    if (!list) return null;
+    const filtered = list.filter((f) => f !== src);
+    return filtered;
+  });
+  sample({
+    clock: files.changed,
+    source: files.$value,
+    filter: (files: File[] | null): files is File[] => files !== null,
+    target: readFiles,
+  });
+
+  $sources.on(readFiles.doneData, (_, readedFiles) =>
+    Array.isArray(readedFiles) ? readedFiles : null,
+  );
+  return { files, $sources, closeButtonClicked };
+};
 //Crop image factory
 export const getCroppedImage = () => {
   const $selectedImage = createStore<string | null>(null);
