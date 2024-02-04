@@ -33,7 +33,7 @@ function Main() {
           />,
         ]}
       />
-      <CreateReplyForm />
+      <CreateReplyForm sourceId={post.id} />
       {post.childPosts.map((post) => (
         <PostView
           layout="feed"

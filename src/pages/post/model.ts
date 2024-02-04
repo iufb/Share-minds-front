@@ -1,6 +1,7 @@
 import { attach, createStore, sample } from "effector";
 import { routes } from "src/shared/routing";
 import { chainAuthorized } from "src/shared/session";
+import { createReplyFx } from "src/features/reply";
 import * as api from "src/shared/api/post";
 const getPostFx = attach({ effect: api.getPostFx });
 export const currentRoute = routes.post;
@@ -18,7 +19,8 @@ sample({
   target: getPostFx,
 });
 sample({
-  clock: authorizedRoute.$params,
+  clock: [authorizedRoute.$params, createReplyFx.done],
+  source: authorizedRoute.$params,
   fn: ({ id }) => id,
   target: getPostFx,
 });

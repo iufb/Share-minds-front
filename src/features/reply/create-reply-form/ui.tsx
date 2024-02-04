@@ -17,9 +17,11 @@ import {
   selectedFiles,
 } from "./model";
 import { $user } from "src/shared/session";
-import { ChangeEventHandler, FormEventHandler } from "react";
-
-export const CreateReplyForm = () => {
+import { ChangeEventHandler, FC, FormEventHandler } from "react";
+interface CreateReplyFormProps {
+  sourceId: number;
+}
+export const CreateReplyForm: FC<CreateReplyFormProps> = ({ sourceId }) => {
   const [user, pending, img, readedFiles] = useUnit([
     $user,
     $formPending,
@@ -40,7 +42,7 @@ export const CreateReplyForm = () => {
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    formSubmited();
+    formSubmited(sourceId);
   };
   return (
     <Grid

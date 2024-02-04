@@ -1,4 +1,10 @@
-import { attach, createEvent, sample } from "effector";
+import {
+  EventCallable,
+  attach,
+  createEvent,
+  createStore,
+  sample,
+} from "effector";
 import { and, every, not, reset } from "patronum";
 import * as api from "src/shared/api/post";
 import * as utils from "src/shared/utils";
@@ -8,7 +14,7 @@ import { createField } from "src/shared/utils";
 //effects
 export const createReplyFx = attach({ effect: api.createPostFx });
 //events
-export const formSubmited = createEvent();
+export const formSubmited = createEvent<number>();
 //stores
 export const replyContentField = createField({
   defaultValue: "",
@@ -48,9 +54,12 @@ sample({
       typeof source.user === "object",
   }),
   filter: and($formValid, not($formPending)),
-  fn: ({ user, content }) => {
+  fn: ({ user, content }, sourceId) => {
     const formdata = new FormData();
-    formdata.append("post", JSON.stringify({ authorId: user.id, content }));
+    formdata.append(
+      "post",
+      JSON.stringify({ authorId: user.id, content, sourceId }),
+    );
     selectedFiles.files.$value.map(
       (files) => {
         if (!files) return files;

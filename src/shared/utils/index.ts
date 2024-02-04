@@ -5,6 +5,7 @@ import {
   sample,
   Event,
   attach,
+  EventCallable,
 } from "effector";
 
 export const getImgUrl = (params?: string | null) =>
@@ -42,16 +43,19 @@ export const readFileFx = createEffect<
   return getFileSrc(data);
 });
 
-interface ICreateField<Value, Error> {
+interface ICreateField<Value, Payload, Error> {
   defaultValue: Value;
   validate?: {
     fn: (value: Value) => Error | null;
-    on: Event<void>;
+    on: EventCallable<Payload>;
   };
   resetOn?: Array<Event<any>>;
 }
+
 // Field factory
-export function createField<Value, Error>(options: ICreateField<Value, Error>) {
+export function createField<Value, Payload, Error>(
+  options: ICreateField<Value, Payload, Error>,
+) {
   const $value = createStore(options.defaultValue);
   const $error = createStore<Error | null>(null);
   const changed = createEvent<Value>();
@@ -74,7 +78,7 @@ export function createField<Value, Error>(options: ICreateField<Value, Error>) {
 //add image to
 export const getImagePreview = () => {
   const readFiles = attach({ effect: readFileFx });
-  const files = createField<File[] | null, Error>({
+  const files = createField<File[] | null, null, Error>({
     defaultValue: null,
   });
   const $sources = createStore<ReadedFilesType[] | null>(null);
