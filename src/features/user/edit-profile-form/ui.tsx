@@ -1,5 +1,4 @@
 import {
-  Avatar,
   BackgroundImage,
   Box,
   Button,

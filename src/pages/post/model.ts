@@ -17,3 +17,8 @@ sample({
   fn: ({ id }) => id,
   target: getPostFx,
 });
+sample({
+  clock: authorizedRoute.$params,
+  fn: ({ id }) => id,
+  target: getPostFx,
+});

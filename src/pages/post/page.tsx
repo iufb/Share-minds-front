@@ -16,10 +16,12 @@ export const PostPage = () => {
 };
 function Main() {
   const post = useUnit($post);
+
   if (!post) return;
   return (
     <>
       <PostView
+        key={post.id}
         layout="post"
         post={post}
         controlButtons={[
@@ -32,6 +34,21 @@ function Main() {
         ]}
       />
       <CreateReplyForm />
+      {post.childPosts.map((post) => (
+        <PostView
+          layout="feed"
+          key={post.id}
+          post={post}
+          controlButtons={[
+            <LikePostButton
+              key={"likeButton"}
+              postId={post.id}
+              likesCount={post.likesCount}
+              isLiked={post.isLiked}
+            />,
+          ]}
+        />
+      ))}
     </>
   );
 }

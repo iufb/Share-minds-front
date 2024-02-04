@@ -9,7 +9,9 @@ export const Feed = () => {
     getKey: ({ id }) => id,
     fn: (post) => (
       <PostView
+        key={post.id}
         post={post}
+        layout={"feed"}
         controlButtons={[
           <LikePostButton
             key={"likeButton"}

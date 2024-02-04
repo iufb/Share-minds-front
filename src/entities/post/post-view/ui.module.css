@@ -1,5 +1,6 @@
-.wrapper {
+.withBorder {
   border-bottom: 1px solid gray;
+  margin-top: 5px;
 }
 a {
   text-decoration: none;
@@ -8,11 +9,21 @@ a {
 .avatar {
   display: flex;
   justify-content: center;
+  position: relative;
+}
+.stroke {
+  width: 1px;
+  height: 100%;
+  margin: 0 auto;
+  color: gray;
 }
 .postHeader {
   display: flex;
   gap: 5px;
   align-items: center;
+}
+.headerWithMargin {
+  margin-left: 9px;
 }
 .row {
   display: flex;
@@ -44,7 +55,6 @@ a {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
 }
-
 .one {
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;

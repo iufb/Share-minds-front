@@ -11,24 +11,32 @@ interface PostViewProps {
   post: PostType;
   layout?: "feed" | "post";
   controlButtons: ReactNode[];
+  isSource?: boolean;
 }
+
 export const PostView: FC<PostViewProps> = ({
   post,
   controlButtons,
+  isSource,
   layout = "feed",
 }) => {
   const isFeed = layout === "feed";
+
   return (
     <>
       {post.source && (
         <PostView
+          isSource={true}
           post={post.source}
           controlButtons={controlButtons}
-          layout={layout}
+          layout={"feed"}
         />
       )}
-      <Grid className={styles["wrapper"]} px={isFeed ? 5 : 20}>
-        {isFeed && (
+      <Grid
+        className={clsx(!isSource && styles["withBorder"])}
+        px={isFeed ? 5 : 20}
+      >
+        {(isFeed || isSource) && (
           <Grid.Col span={2} className={styles["avatar"]}>
             <Link
               to={routes.profile}
@@ -40,6 +48,7 @@ export const PostView: FC<PostViewProps> = ({
                 color="light-blue.9"
                 src={getImgUrl(post.author.avatar)}
               />
+              {isSource && <hr className={styles["stroke"]} />}
             </Link>
           </Grid.Col>
         )}
@@ -47,7 +56,7 @@ export const PostView: FC<PostViewProps> = ({
           <PostHeader post={post} isFeed={isFeed} layout={layout} />
           {isFeed ? (
             <Link to={routes.post} params={{ id: post.id }}>
-              <Box my={10}>{post.content}</Box>
+              <Box my={0}>{post.content}</Box>
             </Link>
           ) : (
             <Box my={10}>{post.content}</Box>
@@ -69,7 +78,10 @@ interface PostHeaderProps {
 }
 const PostHeader: FC<PostHeaderProps> = ({ post, isFeed, layout }) => (
   <Link
-    className={styles["postHeader"]}
+    className={clsx(
+      styles["postHeader"],
+      !isFeed && styles["headerWithMargin"],
+    )}
     to={routes.profile}
     params={{ id: post.author.id }}
   >
@@ -77,8 +89,8 @@ const PostHeader: FC<PostHeaderProps> = ({ post, isFeed, layout }) => (
       <Avatar
         color="light-blue.9"
         src={getImgUrl(post.author.avatar)}
-        size={!isFeed ? 50 : 35}
-        radius="sm"
+        size={!isFeed && !post.source ? 50 : 38}
+        radius={!post.source ? "sm" : "xl"}
       />
     )}
     <Box
