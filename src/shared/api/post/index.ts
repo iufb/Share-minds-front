@@ -42,11 +42,9 @@ export const getPostFx = createEffect<number, PostType, PostError>((id) =>
   requestFx({ path: `posts/${id}`, method: "GET" }),
 );
 interface LikePostRequest {
-  likeFor: string;
   sourceId: number;
 }
 interface UnlikePostRequest {
-  likeFor: string;
   sourceId: number;
 }
 
@@ -59,10 +57,9 @@ export const likePostFx = createEffect<LikePostRequest, LikePostResponse>(
   (body) => requestFx({ path: "likes", method: "POST", body: { json: body } }),
 );
 export const unlikePostFx = createEffect<UnlikePostRequest, LikePostResponse>(
-  ({ likeFor, sourceId }) =>
+  ({ sourceId }) =>
     requestFx({
       path: `likes/${sourceId}`,
       method: "DELETE",
-      query: { likeFor },
     }),
 );

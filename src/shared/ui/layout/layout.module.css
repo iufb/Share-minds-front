@@ -27,6 +27,7 @@
   padding-right: 5px;
   min-height: 100vh;
   border-right: 1px solid var(--mantine-color-white);
+  padding-bottom: 40px;
 }
 .aside {
   display: none;
@@ -47,6 +48,7 @@
   .main {
     margin-left: 88px;
     padding-right: 0;
+    padding-bottom: 0;
   }
   .aside {
     display: flex;

@@ -13,12 +13,12 @@ export const unLikePostClicked = createEvent<number>();
 
 sample({
   clock: likePostClicked,
-  fn: ({ sourceId }) => ({ sourceId, likeFor: "post" }),
+  fn: ({ sourceId }) => ({ sourceId }),
   target: likePostFx,
 });
 
 sample({
   clock: unLikePostClicked,
-  fn: (id) => ({ sourceId: id, likeFor: "post" }),
+  fn: (id) => ({ sourceId: id }),
   target: unlikePostFx,
 });

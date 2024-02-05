@@ -66,7 +66,7 @@ export const CreateReplyForm: FC<CreateReplyFormProps> = ({ sourceId }) => {
             radius={"30px"}
             loading={pending}
           >
-            Post
+            Reply
           </Button>
         </Group>
         <ImagesPreview

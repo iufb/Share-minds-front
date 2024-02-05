@@ -13,7 +13,8 @@ export const PostReactPanel: FC<PostReactPanelProps> = ({
     <Group
       className={showBorder ? styles["border"] : ""}
       gap={10}
-      justify="space-between"
+      py={10}
+      justify="space-evenly"
       align="center"
     >
       {controlButtons.map((controlButton) => controlButton)}

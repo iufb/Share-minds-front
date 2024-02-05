@@ -1,5 +1,6 @@
 import { useUnit } from "effector-react";
 import { PostView } from "src/entities/post";
+import { ReplyButton } from "src/entities/reply";
 import { LikePostButton } from "src/features/post";
 import { CreateReplyForm } from "src/features/reply";
 import { $post } from "src/pages/post/model";
@@ -25,6 +26,9 @@ function Main() {
         layout="post"
         post={post}
         controlButtons={[
+          <ReplyButton
+            replyPostForm={<CreateReplyForm sourceId={post.id} />}
+          />,
           <LikePostButton
             key={"likeButton"}
             postId={post.id}
@@ -40,6 +44,9 @@ function Main() {
           key={post.id}
           post={post}
           controlButtons={[
+            <ReplyButton
+              replyPostForm={<CreateReplyForm sourceId={post.id} />}
+            />,
             <LikePostButton
               key={"likeButton"}
               postId={post.id}

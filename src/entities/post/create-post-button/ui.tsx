@@ -3,7 +3,6 @@ import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconFeather } from "@tabler/icons-react";
 import { FC, ReactNode } from "react";
 import styles from "./ui.module.css";
-import clsx from "clsx";
 interface CreatePostButtonProps {
   createPostForm: ReactNode;
 }

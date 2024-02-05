@@ -18,6 +18,8 @@ export const LikePostButton: FC<LikePostButtonProps> = ({
 }) => {
   const [isLikedState, setIsLikedState] = useState(isLiked);
   const [likesCountState, setLikesCountState] = useState(likesCount);
+  console.log(isLiked, likesCount);
+
   const handleLike = () => {
     setIsLikedState((prev) => !prev);
     if (isLikedState) {
