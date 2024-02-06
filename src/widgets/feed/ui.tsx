@@ -1,9 +1,13 @@
 import { Center, Loader, Stack } from "@mantine/core";
 import { useList, useUnit } from "effector-react";
-import { PostView, ReplyButton } from "src/entities/post";
-import { CreatePostForm, LikePostButton } from "src/features/post";
-import { CreateReplyForm } from "src/features/reply";
-import { $pending, $posts } from "src/widgets/feed/model";
+import { PostView } from "src/entities/post";
+import {
+  CreatePostForm,
+  LikePostButton,
+  ReplyButton,
+  CreateReplyForm,
+} from "src/features/post";
+import { $pending, $posts } from "./model";
 export const Feed = () => {
   const pending = useUnit($pending);
   const posts = useList($posts, {
@@ -15,8 +19,10 @@ export const Feed = () => {
         layout={"feed"}
         controlButtons={[
           <ReplyButton
+            repliesCount={post.repliesCount}
             key={"replyButton"}
             replyPostForm={<CreateReplyForm sourceId={post.id} />}
+            source={post}
           />,
           <LikePostButton
             key={"likeButton"}

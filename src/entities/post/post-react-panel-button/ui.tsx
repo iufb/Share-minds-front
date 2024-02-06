@@ -1,4 +1,3 @@
-import { Group, Text } from "@mantine/core";
 import clsx from "clsx";
 import { FC, ReactNode } from "react";
 import { IconButton } from "src/shared/ui";
@@ -35,7 +34,7 @@ export const ReactPanelButton: FC<ReactPanelButtonProps> = ({
         active={active}
         activeColor={activeColor}
       />
-      <span>{quantity}</span>
+      <span className={styles["text"]}>{quantity}</span>
     </div>
   );
 };

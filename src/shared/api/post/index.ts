@@ -11,6 +11,7 @@ export interface PostType {
   likesCount: number;
   content: string;
   images: string[];
+  repliesCount: number;
 }
 export interface CreatePostRequest extends FormData {}
 export type CreatePostResponse = {

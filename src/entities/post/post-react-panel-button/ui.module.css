@@ -23,7 +23,7 @@
 .unactive {
   color: var(--mantine-color-gray-6);
 }
-span {
+.text {
   font-size: 14px;
   margin-top: 4px;
 }

@@ -35,7 +35,6 @@ const $formValid = every({
 });
 export const selectedFiles = utils.getImagePreview();
 export const $formPending = createReplyFx.pending;
-selectedFiles.$sources.watch((f) => console.log(f, "replyModel"));
 type ValidSource = { user: User; content: string };
 type UnvalidSource = {
   user: null;

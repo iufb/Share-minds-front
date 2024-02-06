@@ -29,6 +29,7 @@ export const PostView: FC<PostViewProps> = ({
           isSource={true}
           post={post.source}
           controlButtons={controlButtons.map((btn, idx) => {
+            console.log(typeof btn, btn);
             if (idx === 0) {
               return cloneElement(
                 btn as ReactElement<{
