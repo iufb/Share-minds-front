@@ -1,0 +1,13 @@
+.button {
+  width: 100%;
+  background-color: inherit;
+  border: inherit;
+  color: var(--mantine-color-white);
+  height: 100%;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}

@@ -15,6 +15,8 @@ import { RouteInstance, RouteParams } from "atomic-router";
 import { FC } from "react";
 import { CreatePostButton } from "src/entities/post/create-post-button/ui";
 import { CreatePostForm } from "src/features/post";
+import { UserProfileButton } from "src/entities/user";
+import { SignoutButton } from "src/features/auth";
 const navlinks = [
   {
     leftSection: (active: boolean) => (
@@ -47,19 +49,21 @@ const navlinks = [
 ];
 export const Sidebar = () => {
   return (
-    <Stack className={styles["container"]}>
-      <Stack component="nav" className={styles["navContainer"]}>
-        {navlinks.map(({ leftSection, path, name }) => (
-          <Navlink
-            key={name}
-            leftSection={leftSection}
-            path={path as unknown as RouteInstance<RouteParams>}
-            name={name}
-          />
-        ))}
+    <Stack className={styles["container"]} justify="space-between">
+      <Stack>
+        <Stack component="nav" className={styles["navContainer"]}>
+          {navlinks.map(({ leftSection, path, name }) => (
+            <Navlink
+              key={name}
+              leftSection={leftSection}
+              path={path as unknown as RouteInstance<RouteParams>}
+              name={name}
+            />
+          ))}
+        </Stack>
+        <CreatePostButton createPostForm={<CreatePostForm />} />
       </Stack>
-
-      <CreatePostButton createPostForm={<CreatePostForm />} />
+      <UserProfileButton logout={<SignoutButton />} />
     </Stack>
   );
 };

@@ -2,6 +2,8 @@
   display: flex;
   align-content: center;
   flex-wrap: wrap;
+  max-height: 840px;
+  height: 100%;
 }
 .navContainer {
   flex-direction: row;
