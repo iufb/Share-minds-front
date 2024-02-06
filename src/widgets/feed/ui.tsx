@@ -1,7 +1,6 @@
 import { Center, Loader, Stack } from "@mantine/core";
 import { useList, useUnit } from "effector-react";
-import { PostView } from "src/entities/post";
-import { ReplyButton } from "src/entities/reply";
+import { PostView, ReplyButton } from "src/entities/post";
 import { CreatePostForm, LikePostButton } from "src/features/post";
 import { CreateReplyForm } from "src/features/reply";
 import { $pending, $posts } from "src/widgets/feed/model";

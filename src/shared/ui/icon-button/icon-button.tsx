@@ -1,14 +1,18 @@
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { ComponentPropsWithoutRef, ReactNode } from "react";
 import styles from "./icon-button.module.css";
 import clsx from "clsx";
-type IconButtonType = {
+interface IconButtonType extends ComponentPropsWithoutRef<"button"> {
   icon: ReactNode;
-  variant?: "close" | "base" | "like" | "transparent";
-} & ButtonHTMLAttributes<HTMLButtonElement>;
+  variant?: "close" | "base";
+  active?: boolean;
+  activeColor?: "blue" | "green" | "red";
+}
 export const IconButton = ({
   icon,
   className,
   variant = "base",
+  active,
+  activeColor,
   ...props
 }: IconButtonType) => {
   return (
@@ -17,12 +21,15 @@ export const IconButton = ({
       className={clsx(
         className,
         styles["button"],
-        {
-          base: styles["base"],
-          close: styles["close"],
-          like: styles["like"],
-          transparent: styles["transparent"],
-        }[variant],
+        variant == "close" && styles["close"],
+        activeColor
+          ? {
+              blue: styles["blue"],
+              green: styles["green"],
+              red: styles["red"],
+            }[activeColor]
+          : styles["blue"],
+        !active && styles["unactive"],
       )}
       {...props}
     >

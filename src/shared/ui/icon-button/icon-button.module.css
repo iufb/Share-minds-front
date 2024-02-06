@@ -21,30 +21,31 @@
   backdrop-filter: blur 10px;
   transition: 0.2s ease-in-out;
 }
-.base {
+
+.blue {
   background: inherit;
 }
-.base > svg {
+.blue > svg {
   color: var(--mantine-color-light-blue-5);
 }
 
-.base:hover {
+.blue:hover {
   background: rgba(var(--rgb-blue-color), 0.1);
 }
-.base > svg:hover {
+.blue > svg:hover {
   color: var(--mantine-color-light-blue-4);
 }
-.like {
+.red {
   background: inherit;
 }
-.like > svg {
+.red > svg {
   color: var(--mantine-color-red-4);
 }
 
-.like:hover {
+.red:hover {
   background: rgba(var(--rgb-red-color), 0.1);
 }
-.like > svg:hover {
+.red > svg:hover {
   color: var(--mantine-color-red-4);
 }
 .close {
@@ -57,10 +58,9 @@
 .close:hover {
   background: rgba(0, 0, 0, 0.4);
 }
-.transparent {
-  background: black;
-  backdrop-filter: blur 10px;
+.unactive {
+  background: inherit;
 }
-.transparent > svg {
-  color: var(--mantine-color-white);
+.unactive > svg {
+  color: var(--mantine-color-gray-6);
 }

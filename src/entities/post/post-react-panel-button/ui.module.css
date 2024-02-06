@@ -1,0 +1,29 @@
+.wrapper {
+  display: flex;
+  gap: 5px;
+}
+.wrapper:hover {
+  transition: 0.2s ease-in-out;
+}
+.blue {
+  color: var(--mantine-color-light-blue-5);
+}
+.blue:hover {
+  color: var(--mantine-color-light-blue-5);
+}
+.red {
+  color: var(--mantine-color-red-4);
+}
+.red:hover {
+  color: var(--mantine-color-red-4);
+}
+.green :hover {
+}
+
+.unactive {
+  color: var(--mantine-color-gray-6);
+}
+span {
+  font-size: 14px;
+  margin-top: 4px;
+}

@@ -1,6 +1,5 @@
 import { useUnit } from "effector-react";
-import { PostView } from "src/entities/post";
-import { ReplyButton } from "src/entities/reply";
+import { PostView, ReplyButton } from "src/entities/post";
 import { LikePostButton } from "src/features/post";
 import { CreateReplyForm } from "src/features/reply";
 import { $post } from "src/pages/post/model";
