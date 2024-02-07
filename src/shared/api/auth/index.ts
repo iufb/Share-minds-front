@@ -46,7 +46,9 @@ export const signUpFx = createEffect<
     body: { json: form },
   });
 });
-
+export const signOutFx = createEffect(() =>
+  requestFx({ path: "auth/logout", method: "GET" }),
+);
 export type GetSessionError = ResponseError;
 export const getSessionFx = createEffect<void, User, GetSessionError>(() =>
   requestFx({
