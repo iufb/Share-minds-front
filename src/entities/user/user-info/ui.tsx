@@ -1,17 +1,15 @@
 import { Avatar, Box, Group, Stack, Text, Title } from "@mantine/core";
 import { ReactNode } from "react";
 import { User } from "src/shared/api/user";
-import styles from "./ui.module.css";
 import { getImgUrl } from "src/shared/utils";
-import { useUnit } from "effector-react";
-import { $user } from "src/shared/session";
+import styles from "./ui.module.css";
 type UserInfoType = {
+  profile: User | null;
   actionButton: ReactNode;
 };
-export const UserInfo = ({ actionButton }: UserInfoType) => {
-  const user = useUnit($user);
-  if (!user) return;
-  const { avatar, cover, username, email, bio } = user;
+export const UserInfo = ({ profile, actionButton }: UserInfoType) => {
+  if (!profile) return;
+  const { avatar, cover, username, email, bio } = profile;
   return (
     <Stack className={styles["wrapper"]}>
       {cover ? (

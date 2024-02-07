@@ -60,7 +60,6 @@ export const router = createHistoryRouter({
   routes: routesMap,
   controls,
 });
-
 sample({
   clock: appStarted,
   fn: () => createBrowserHistory(),

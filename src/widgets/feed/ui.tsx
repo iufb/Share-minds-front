@@ -1,12 +1,7 @@
 import { Center, Loader, Stack } from "@mantine/core";
 import { useList, useUnit } from "effector-react";
 import { PostView } from "src/entities/post";
-import {
-  CreatePostForm,
-  LikePostButton,
-  ReplyButton,
-  CreateReplyForm,
-} from "src/features/post";
+import { CreatePostForm, LikePostButton, ReplyButton } from "src/features/post";
 import { $pending, $posts } from "./model";
 export const Feed = () => {
   const pending = useUnit($pending);
@@ -21,7 +16,6 @@ export const Feed = () => {
           <ReplyButton
             repliesCount={post.repliesCount}
             key={"replyButton"}
-            replyPostForm={<CreateReplyForm sourceId={post.id} />}
             source={post}
           />,
           <LikePostButton

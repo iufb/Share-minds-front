@@ -10,12 +10,11 @@ export type User = {
   bio?: string;
 };
 type UserError = { status: number; error: string; message: string };
-export const getUserFx = createEffect<{ id: number }, User, UserError>(
-  ({ id }) =>
-    requestFx({
-      path: `users/${id}`,
-      method: "GET",
-    }),
+export const getUserFx = createEffect<number, User, UserError>((id) =>
+  requestFx({
+    path: `users/${id}`,
+    method: "GET",
+  }),
 );
 export const editUserFx = createEffect<
   { data: FormData; id: number },
