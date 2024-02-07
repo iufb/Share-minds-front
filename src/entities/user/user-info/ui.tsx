@@ -1,4 +1,12 @@
-import { Avatar, Box, Group, Stack, Text, Title } from "@mantine/core";
+import {
+  Avatar,
+  Box,
+  Group,
+  Skeleton,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
 import { ReactNode } from "react";
 import { User } from "src/shared/api/user";
 import { getImgUrl } from "src/shared/utils";
@@ -8,7 +16,20 @@ type UserInfoType = {
   actionButton: ReactNode;
 };
 export const UserInfo = ({ profile, actionButton }: UserInfoType) => {
-  if (!profile) return;
+  if (profile === null)
+    return (
+      <Stack className={styles["wrapper"]}>
+        <Skeleton />
+        <Group w="100%" mt={"-100px"} px={5} justify="space-between">
+          <Skeleton circle height={150} />
+        </Group>
+        <Stack px={15} gap={2}>
+          <Skeleton />
+          <Skeleton />
+        </Stack>
+        <Skeleton />
+      </Stack>
+    );
   const { avatar, cover, username, email, bio } = profile;
   return (
     <Stack className={styles["wrapper"]}>

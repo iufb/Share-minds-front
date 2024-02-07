@@ -107,21 +107,17 @@ const FormImages = () => {
 
   return (
     <Stack>
-      <Box className={styles["coverWrapper"]}>
-        <Box
-          component="img"
-          className={styles["cover"]}
-          src={
-            newCroppedCover ? newCroppedCover.dataUrl : getImgUrl(user?.cover)
-          }
-        />
+      <BackgroundImage
+        src={newCroppedCover ? newCroppedCover.dataUrl : getImgUrl(user?.cover)}
+        className={styles["coverWrapper"]}
+      >
         <FileInput
           onChange={changeCover}
           size="lg"
           variant="transparent"
           className={styles["fileInput"]}
         />
-      </Box>
+      </BackgroundImage>
       <BackgroundImage
         src={
           newCroppedAvatar ? newCroppedAvatar.dataUrl : getImgUrl(user?.avatar)

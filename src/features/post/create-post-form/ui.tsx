@@ -55,7 +55,11 @@ export const CreatePostForm = () => {
       <Grid.Col className={styles["right"]} span={10}>
         <ContentInput disabled={pending} />
         <Group className={styles["footer"]}>
-          <FileInput onChange={handleChange} disabled={img?.length === 4} />
+          <FileInput
+            variant="base"
+            onChange={handleChange}
+            disabled={img?.length === 4}
+          />
           <Button
             type="submit"
             maw={"fit-content"}

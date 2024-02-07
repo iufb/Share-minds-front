@@ -14,14 +14,35 @@
   opacity: 0.5;
   cursor: default;
 }
-.button:disabled:hover {
-  background: inherit;
-}
+
 .button:hover {
   backdrop-filter: blur 10px;
   transition: 0.2s ease-in-out;
 }
 
+.close {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.close:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+.unactive {
+  background: inherit;
+}
+.unactive > svg {
+  color: var(--mantine-color-gray-6);
+}
+
+.base > svg {
+  color: var(--mantine-color-light-blue-5);
+}
+.base:disabled:hover {
+  background: inherit;
+}
 .blue {
   background: inherit;
 }
@@ -48,19 +69,10 @@
 .red > svg:hover {
   color: var(--mantine-color-red-4);
 }
-.close {
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  position: absolute;
-  top: 5px;
-  right: 5px;
+.transparent {
+  background: rgba(255, 255, 255, 0.76);
+  backdrop-filter: blur 10px;
 }
-.close:hover {
-  background: rgba(0, 0, 0, 0.4);
-}
-.unactive {
-  background: inherit;
-}
-.unactive > svg {
-  color: var(--mantine-color-gray-6);
+.transparent > svg {
+  color: var(--mantine-color-gray-9);
 }

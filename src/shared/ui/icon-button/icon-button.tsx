@@ -3,7 +3,7 @@ import styles from "./icon-button.module.css";
 import clsx from "clsx";
 interface IconButtonType extends ComponentPropsWithoutRef<"button"> {
   icon: ReactNode;
-  variant?: "close" | "base";
+  variant?: "close" | "base" | "transparent";
   active?: boolean;
   activeColor?: "blue" | "green" | "red";
 }
@@ -21,7 +21,6 @@ export const IconButton = ({
       className={clsx(
         className,
         styles["button"],
-        variant == "close" && styles["close"],
         activeColor
           ? {
               blue: styles["blue"],
@@ -30,6 +29,11 @@ export const IconButton = ({
             }[activeColor]
           : styles["blue"],
         !active && styles["unactive"],
+        {
+          close: styles["close"],
+          transparent: styles["transparent"],
+          base: styles["base"],
+        }[variant],
       )}
       {...props}
     >
