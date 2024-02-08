@@ -30,12 +30,6 @@
 .close:hover {
   background: rgba(0, 0, 0, 0.4);
 }
-.unactive {
-  background: inherit;
-}
-.unactive > svg {
-  color: var(--mantine-color-gray-6);
-}
 
 .base > svg {
   color: var(--mantine-color-light-blue-5);
@@ -68,6 +62,25 @@
 }
 .red > svg:hover {
   color: var(--mantine-color-red-4);
+}
+.green {
+  background: inherit;
+}
+.green > svg {
+  color: var(--mantine-color-green-4);
+}
+
+.green:hover {
+  background: rgba(var(--rgb-green-color), 0.1);
+}
+.green > svg:hover {
+  color: var(--mantine-color-green-8);
+}
+.unactive {
+  background: inherit;
+}
+.unactive > svg {
+  color: var(--mantine-color-gray-6);
 }
 .transparent {
   background: rgba(255, 255, 255, 0.76);

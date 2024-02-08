@@ -4,6 +4,7 @@ import { requestFx } from "src/shared/utils";
 export interface PostType {
   id: number;
   author: User;
+  isRepost?: boolean;
   sourceId: number | null;
   source?: PostType;
   childPosts: PostType[];
@@ -14,9 +15,7 @@ export interface PostType {
   repliesCount: number;
 }
 export interface CreatePostRequest extends FormData {}
-export type CreatePostResponse = {
-  status: string;
-};
+export type CreatePostResponse = PostType;
 export type PostError = {
   status: number;
   message: string;
@@ -42,6 +41,19 @@ export const getPostsFx = createEffect<void, PostType[], PostError>(() =>
 export const getPostFx = createEffect<number, PostType, PostError>((id) =>
   requestFx({ path: `posts/${id}`, method: "GET" }),
 );
+export interface RepostCountResponse {
+  count: number;
+  isReposted: boolean;
+  repostId: number;
+}
+export const unrepostFx = createEffect<number, { status: string }, PostError>(
+  (id) => requestFx({ path: `posts/${id}`, method: "DELETE" }),
+);
+export const getRepostsCountFx = createEffect<
+  number,
+  RepostCountResponse,
+  PostError
+>((id) => requestFx({ path: `posts/repostsCount/${id}`, method: "GET" }));
 interface LikePostRequest {
   sourceId: number;
 }

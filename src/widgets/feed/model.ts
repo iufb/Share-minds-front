@@ -1,5 +1,6 @@
 import { attach, createEvent, createStore, sample } from "effector";
 import * as api from "src/shared/api/post";
+import { createPostFx } from "src/features/post";
 export const startLoadPosts = createEvent();
 export const getPostsFx = attach({ effect: api.getPostsFx });
 export const $posts = createStore<api.PostType[]>([]);
@@ -10,7 +11,7 @@ sample({
   target: getPostsFx,
 });
 sample({
-  clock: api.createPostFx.doneData,
+  clock: createPostFx.doneData,
   target: getPostsFx,
 });
 $posts.watch((p) => console.log(p));

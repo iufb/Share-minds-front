@@ -51,7 +51,14 @@ interface ICreateField<Value, Payload, Error> {
   };
   resetOn?: Array<Event<any>>;
 }
-
+export function createToggle() {
+  const $status = createStore(false);
+  const opened = createEvent();
+  const closed = createEvent();
+  $status.on(opened, () => true);
+  $status.on(closed, () => false);
+  return { $status, opened, closed };
+}
 // Field factory
 export function createField<Value, Payload, Error>(
   options: ICreateField<Value, Payload, Error>,

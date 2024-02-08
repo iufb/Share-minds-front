@@ -17,7 +17,12 @@
 .red:hover {
   color: var(--mantine-color-red-4);
 }
-.green :hover {
+
+.green {
+  color: var(--mantine-color-green-8);
+}
+.green:hover {
+  color: var(--mantine-color-green-8);
 }
 
 .unactive {

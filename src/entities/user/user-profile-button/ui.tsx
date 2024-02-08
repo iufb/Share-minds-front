@@ -6,6 +6,7 @@ import { getImgUrl } from "src/shared/utils";
 import styles from "./ui.module.css";
 import { FC, ReactNode, useRef, useState } from "react";
 import { useClickOutside } from "src/shared/hooks/useClickOutside";
+import { Modal } from "src/shared/ui";
 interface UserProfileButtonProps {
   logout: ReactNode;
 }
@@ -39,9 +40,9 @@ export const UserProfileButton: FC<UserProfileButtonProps> = ({ logout }) => {
         </Grid>
       </Box>
       {open && (
-        <div className={styles["modal"]} ref={modalRef}>
+        <Modal className={styles["modal"]} onClose={() => setOpen(false)}>
           {logout}
-        </div>
+        </Modal>
       )}
     </Box>
   );

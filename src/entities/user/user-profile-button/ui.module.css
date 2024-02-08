@@ -31,17 +31,8 @@
     gap: 4px;
   }
   .modal {
-    position: absolute;
-    padding: 10px 0;
-    z-index: 50;
-    top: -70px;
+    top: -90px;
     width: 200px;
-    height: 100%;
-    max-height: 100px;
-    background-color: var(--mantine-color-dark-blue-9);
-    -webkit-box-shadow: 0 0 20px black;
-    -moz-box-shadow: 0 0 20px black;
-    box-shadow: 0 0 20px black;
   }
 }
 

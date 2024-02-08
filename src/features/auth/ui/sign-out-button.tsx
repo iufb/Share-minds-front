@@ -1,17 +1,12 @@
-import { Box } from "@mantine/core";
 import { useUnit } from "effector-react";
+import { signOutButtonClicked } from "src/features/auth/models/sign-out";
 import { $user } from "src/shared/session";
-import styles from "./sign-out-button.module.css";
-import { signOutButtonClicked } from "../models/sign-out";
+import { Button } from "src/shared/ui";
 export const SignoutButton = () => {
   const user = useUnit($user);
   return (
-    <Box
-      className={styles["button"]}
-      component="button"
-      onClick={() => signOutButtonClicked()}
-    >
+    <Button onClick={() => signOutButtonClicked()}>
       Log out @{user?.email.split("@")[0]}
-    </Box>
+    </Button>
   );
 };

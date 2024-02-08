@@ -1,0 +1,7 @@
+.wrapper {
+  position: relative;
+}
+.modal {
+  top: -140px;
+  width: 150px;
+}

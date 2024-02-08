@@ -28,12 +28,12 @@ export const IconButton = ({
               red: styles["red"],
             }[activeColor]
           : styles["blue"],
-        !active && styles["unactive"],
         {
           close: styles["close"],
           transparent: styles["transparent"],
           base: styles["base"],
         }[variant],
+        !active && styles["unactive"],
       )}
       {...props}
     >
