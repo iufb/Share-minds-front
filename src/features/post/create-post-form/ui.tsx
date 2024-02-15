@@ -14,11 +14,15 @@ import {
   formSubmited,
   selectedFiles,
 } from "./model";
-import { ChangeEventHandler, FormEventHandler } from "react";
+import { ChangeEventHandler, FC, FormEventHandler } from "react";
 import { FileInput, ImagesPreview } from "src/shared/ui";
 import { $user } from "src/shared/session";
 import { getImgUrl } from "src/shared/utils";
-export const CreatePostForm = () => {
+import { PostType } from "src/shared/api/post";
+interface CreatePostFormProps {
+  parentPost?: PostType;
+}
+export const CreatePostForm: FC<CreatePostFormProps> = ({ parentPost }) => {
   const [user, pending, img, readedFiles] = useUnit([
     $user,
     $formPending,
@@ -28,7 +32,7 @@ export const CreatePostForm = () => {
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    formSubmited();
+    formSubmited({ isRepost: !!parentPost });
   };
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.target.files) {

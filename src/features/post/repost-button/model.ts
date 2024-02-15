@@ -16,9 +16,10 @@ export const buttonMounted = createEvent<number>();
 
 //Stores
 export const repostModalStatus = createToggle();
+const $postId = createStore<number | null>(null);
 export const $repostsInfo = createStore<api.RepostCountResponse | null>(null);
 $repostsInfo.on(getRepostsCount.doneData, (_, count) => count);
-
+$postId.on(buttonMounted, (_, id) => id);
 sample({
   clock: buttonMounted,
   target: getRepostsCount,
@@ -64,6 +65,7 @@ sample({
 
 sample({
   clock: unrepostFx.doneData,
-  source: buttonMounted,
+  source: $postId,
+  filter: (postId): postId is number => typeof postId === "number",
   target: getRepostsCount,
 });

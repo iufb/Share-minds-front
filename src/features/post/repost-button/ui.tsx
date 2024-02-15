@@ -1,18 +1,18 @@
 import { Box } from "@mantine/core";
 import { IconPencilPlus, IconRepeat } from "@tabler/icons-react";
-import { FC, useEffect, useState } from "react";
+import { useUnit } from "effector-react";
+import { FC, useEffect } from "react";
 import { ReactPanelButton } from "src/entities/post";
 import { Button, Modal } from "src/shared/ui";
-import styles from "./ui.module.css";
 import {
-  repostButtonClicked,
-  quoteButtonClicked,
   $repostsInfo,
   buttonMounted,
+  quoteButtonClicked,
+  repostButtonClicked,
   repostModalStatus,
   unrepostButtonClicked,
 } from "./model";
-import { useUnit } from "effector-react";
+import styles from "./ui.module.css";
 interface RepostButtonProps {
   sourceId: number;
 }

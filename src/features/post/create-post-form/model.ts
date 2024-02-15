@@ -8,7 +8,7 @@ import { createField } from "src/shared/utils";
 //effects
 export const createPostFx = attach({ effect: api.createPostFx });
 //events
-export const formSubmited = createEvent();
+export const formSubmited = createEvent<{ isRepost: boolean }>();
 //stores
 export const contentField = createField({
   defaultValue: "",
@@ -49,9 +49,12 @@ sample({
       typeof source.user === "object",
   }),
   filter: and($formValid, not($formPending)),
-  fn: ({ user, content }) => {
+  fn: ({ user, content }, { isRepost }) => {
     const formdata = new FormData();
-    formdata.append("post", JSON.stringify({ authorId: user.id, content }));
+    formdata.append(
+      "post",
+      JSON.stringify({ authorId: user.id, content, isRepost }),
+    );
     selectedFiles.files.$value.map(
       (files) => {
         if (!files) return files;
