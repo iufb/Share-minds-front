@@ -1,8 +1,9 @@
-import { Button, Modal, Text } from "@mantine/core";
+import { Button, Text } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconFeather } from "@tabler/icons-react";
 import { FC, ReactNode } from "react";
 import styles from "./ui.module.css";
+import { Modal } from "src/shared/ui";
 interface CreatePostButtonProps {
   createPostForm: ReactNode;
 }
@@ -10,9 +11,7 @@ export const CreatePostButton: FC<CreatePostButtonProps> = ({
   createPostForm,
 }) => {
   const [opened, { open, close }] = useDisclosure(false);
-  const fullScreenModal = useMediaQuery("(max-width: 500px)");
   const tablet = useMediaQuery("(max-width: 990px)");
-
   return (
     <>
       <Button
@@ -23,14 +22,7 @@ export const CreatePostButton: FC<CreatePostButtonProps> = ({
       >
         {tablet ? <IconFeather /> : <Text>Post</Text>}
       </Button>
-      <Modal
-        size={616}
-        fullScreen={fullScreenModal}
-        opened={opened}
-        onClose={close}
-        px={0}
-        title="Create Post"
-      >
+      <Modal opened={opened} close={close} title="Create Post">
         {createPostForm}
       </Modal>
     </>

@@ -16,7 +16,11 @@
 .textarea-input:focus {
   font-size: 20px;
 }
-
+.post {
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 6px;
+}
 .postButton {
   align-self: end;
 }

@@ -15,6 +15,7 @@ export const quoteButtonClicked = createEvent();
 export const buttonMounted = createEvent<number>();
 
 //Stores
+export const repostPopupStatus = createToggle();
 export const repostModalStatus = createToggle();
 const $postId = createStore<number | null>(null);
 export const $repostsInfo = createStore<api.RepostCountResponse | null>(null);
@@ -33,7 +34,7 @@ sample({
   filter: (clock: ValidSource | UnvalidSource): clock is ValidSource =>
     !!clock.sourceId,
   fn: ({ sourceId }) => sourceId,
-  target: [getRepostsCount, repostModalStatus.closed],
+  target: [getRepostsCount, repostPopupStatus.closed],
 });
 
 //Create repost without quote

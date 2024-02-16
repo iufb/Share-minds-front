@@ -1,23 +1,26 @@
-import { Box } from "@mantine/core";
-import { ComponentPropsWithoutRef, FC, useRef } from "react";
-import { useClickOutside } from "src/shared/hooks";
-import styles from "./ui.module.css";
-import clsx from "clsx";
-interface ModalProps extends ComponentPropsWithoutRef<"div"> {
-  onClose: () => void;
-}
+import { Modal as MantineModal } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
+import { FC, ReactNode } from "react";
 
-export const Modal: FC<ModalProps> = ({
-  onClose,
-  children,
-  className,
-  ...props
-}) => {
-  const modalRef = useRef<HTMLDivElement>(null);
-  useClickOutside(modalRef, onClose);
+interface ModalProps {
+  opened: boolean;
+  close: () => void;
+  children: ReactNode;
+  title: string;
+}
+export const Modal: FC<ModalProps> = ({ opened, close, children, title }) => {
+  const fullScreenModal = useMediaQuery("(max-width: 500px)");
+
   return (
-    <Box ref={modalRef} className={clsx(className, styles["modal"])} {...props}>
+    <MantineModal
+      size={616}
+      fullScreen={fullScreenModal}
+      opened={opened}
+      onClose={close}
+      px={0}
+      title={title}
+    >
       {children}
-    </Box>
+    </MantineModal>
   );
 };

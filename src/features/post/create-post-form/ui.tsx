@@ -1,24 +1,26 @@
 import {
   Avatar,
+  Box,
   Button,
+  Text,
   Grid,
   Group,
   Textarea,
   TextareaProps,
 } from "@mantine/core";
-import styles from "./ui.module.css";
 import { useUnit } from "effector-react";
+import { ChangeEventHandler, FC, FormEventHandler } from "react";
+import { PostType } from "src/shared/api/post";
+import { $user } from "src/shared/session";
+import { FileInput, ImagesPreview } from "src/shared/ui";
+import { getImgUrl } from "src/shared/utils";
 import {
   $formPending,
   contentField,
   formSubmited,
   selectedFiles,
 } from "./model";
-import { ChangeEventHandler, FC, FormEventHandler } from "react";
-import { FileInput, ImagesPreview } from "src/shared/ui";
-import { $user } from "src/shared/session";
-import { getImgUrl } from "src/shared/utils";
-import { PostType } from "src/shared/api/post";
+import styles from "./ui.module.css";
 interface CreatePostFormProps {
   parentPost?: PostType;
 }
@@ -32,7 +34,10 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({ parentPost }) => {
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    formSubmited({ isRepost: !!parentPost });
+    formSubmited({
+      isRepost: !!parentPost,
+      sourceId: parentPost ? parentPost.id : null,
+    });
   };
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.target.files) {
@@ -58,6 +63,16 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({ parentPost }) => {
       </Grid.Col>
       <Grid.Col className={styles["right"]} span={10}>
         <ContentInput disabled={pending} />
+        {parentPost && (
+          <Box className={styles["post"]}>
+            <Group gap={5}>
+              <Avatar src={getImgUrl(parentPost.author.avatar)} size={20} />
+              <Text>{parentPost.author.username}</Text>
+              <Text c={"gray"}>@{parentPost.author.email.split("@")[0]}</Text>
+            </Group>
+            <p>{parentPost.content}</p>
+          </Box>
+        )}
         <Group className={styles["footer"]}>
           <FileInput
             variant="base"

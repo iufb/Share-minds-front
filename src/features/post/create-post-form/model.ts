@@ -8,7 +8,10 @@ import { createField } from "src/shared/utils";
 //effects
 export const createPostFx = attach({ effect: api.createPostFx });
 //events
-export const formSubmited = createEvent<{ isRepost: boolean }>();
+export const formSubmited = createEvent<{
+  isRepost: boolean;
+  sourceId: number | null;
+}>();
 //stores
 export const contentField = createField({
   defaultValue: "",
@@ -28,7 +31,6 @@ const $formValid = every({
   predicate: (status) => status === null,
 });
 export const selectedFiles = utils.getImagePreview();
-selectedFiles.$sources.watch((f) => console.log(f, "PostModel"));
 export const $formPending = createPostFx.pending;
 
 type ValidSource = { user: User; content: string };
@@ -49,11 +51,11 @@ sample({
       typeof source.user === "object",
   }),
   filter: and($formValid, not($formPending)),
-  fn: ({ user, content }, { isRepost }) => {
+  fn: ({ user, content }, { isRepost, sourceId }) => {
     const formdata = new FormData();
     formdata.append(
       "post",
-      JSON.stringify({ authorId: user.id, content, isRepost }),
+      JSON.stringify({ authorId: user.id, content, isRepost, sourceId }),
     );
     selectedFiles.files.$value.map(
       (files) => {

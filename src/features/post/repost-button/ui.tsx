@@ -3,63 +3,85 @@ import { IconPencilPlus, IconRepeat } from "@tabler/icons-react";
 import { useUnit } from "effector-react";
 import { FC, useEffect } from "react";
 import { ReactPanelButton } from "src/entities/post";
-import { Button, Modal } from "src/shared/ui";
+import { Button, PopupModal, Modal } from "src/shared/ui";
 import {
   $repostsInfo,
   buttonMounted,
-  quoteButtonClicked,
   repostButtonClicked,
   repostModalStatus,
+  repostPopupStatus,
   unrepostButtonClicked,
 } from "./model";
 import styles from "./ui.module.css";
+import { CreatePostForm } from "src/features/post";
+import { PostType } from "src/shared/api/post";
 interface RepostButtonProps {
-  sourceId: number;
+  parentPost: PostType;
 }
-export const RepostButton: FC<RepostButtonProps> = ({ sourceId }) => {
-  const [repostsInfo, modalStatus, open, close] = useUnit([
+export const RepostButton: FC<RepostButtonProps> = ({ parentPost }) => {
+  const [
+    repostsInfo,
+    modalStatus,
+    popupOpened,
+    closePopup,
+    quoteModalOpened,
+    openQuoteModal,
+    closeQuoteModal,
+  ] = useUnit([
     $repostsInfo,
+    repostPopupStatus.$status,
+    repostPopupStatus.opened,
+    repostPopupStatus.closed,
     repostModalStatus.$status,
     repostModalStatus.opened,
     repostModalStatus.closed,
   ]);
   useEffect(() => {
-    if (sourceId) buttonMounted(sourceId);
+    if (parentPost) buttonMounted(parentPost.id);
   }, []);
   return (
-    <Box className={styles["wrapper"]}>
-      <ReactPanelButton
-        icon={<IconRepeat size={18} />}
-        action={open}
-        active={repostsInfo?.isReposted ?? false}
-        activeColor="green"
-        quantity={repostsInfo?.count ?? 0}
-      />
-      {modalStatus && (
-        <Modal className={styles["modal"]} onClose={close}>
-          {repostsInfo?.isReposted ? (
+    <>
+      <Box className={styles["wrapper"]}>
+        <ReactPanelButton
+          icon={<IconRepeat size={18} />}
+          action={popupOpened}
+          active={repostsInfo?.isReposted ?? false}
+          activeColor="green"
+          quantity={repostsInfo?.count ?? 0}
+        />
+        {modalStatus && (
+          <PopupModal className={styles["modal"]} onClose={closePopup}>
+            {repostsInfo?.isReposted ? (
+              <Button
+                onClick={() => unrepostButtonClicked()}
+                icon={<IconRepeat size={20} />}
+              >
+                Unrepost
+              </Button>
+            ) : (
+              <Button
+                onClick={() => repostButtonClicked(parentPost.id)}
+                icon={<IconRepeat size={20} />}
+              >
+                Repost
+              </Button>
+            )}
             <Button
-              onClick={() => unrepostButtonClicked()}
-              icon={<IconRepeat size={20} />}
+              onClick={() => openQuoteModal()}
+              icon={<IconPencilPlus size={20} />}
             >
-              Unrepost
+              Quote
             </Button>
-          ) : (
-            <Button
-              onClick={() => repostButtonClicked(sourceId)}
-              icon={<IconRepeat size={20} />}
-            >
-              Repost
-            </Button>
-          )}
-          <Button
-            onClick={() => quoteButtonClicked()}
-            icon={<IconPencilPlus size={20} />}
-          >
-            Quote
-          </Button>
-        </Modal>
-      )}
-    </Box>
+          </PopupModal>
+        )}
+      </Box>
+      <Modal
+        title="Create Repost"
+        opened={quoteModalOpened}
+        close={closeQuoteModal}
+      >
+        <CreatePostForm parentPost={parentPost} />
+      </Modal>
+    </>
   );
 };

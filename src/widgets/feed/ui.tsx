@@ -23,7 +23,7 @@ export const Feed = () => {
             key={"replyButton"}
             source={post}
           />,
-          <RepostButton sourceId={post.id} />,
+          <RepostButton parentPost={post} />,
           <LikePostButton
             key={"likeButton"}
             postId={post.id}
