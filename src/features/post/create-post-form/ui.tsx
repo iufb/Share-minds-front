@@ -1,8 +1,6 @@
 import {
   Avatar,
-  Box,
   Button,
-  Text,
   Grid,
   Group,
   Textarea,
@@ -21,6 +19,7 @@ import {
   selectedFiles,
 } from "./model";
 import styles from "./ui.module.css";
+import { RepostView } from "src/entities/post";
 interface CreatePostFormProps {
   parentPost?: PostType;
 }
@@ -63,16 +62,7 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({ parentPost }) => {
       </Grid.Col>
       <Grid.Col className={styles["right"]} span={10}>
         <ContentInput disabled={pending} />
-        {parentPost && (
-          <Box className={styles["post"]}>
-            <Group gap={5}>
-              <Avatar src={getImgUrl(parentPost.author.avatar)} size={20} />
-              <Text>{parentPost.author.username}</Text>
-              <Text c={"gray"}>@{parentPost.author.email.split("@")[0]}</Text>
-            </Group>
-            <p>{parentPost.content}</p>
-          </Box>
-        )}
+        {parentPost && <RepostView repost={parentPost} variant="collapsed" />}
         <Group className={styles["footer"]}>
           <FileInput
             variant="base"

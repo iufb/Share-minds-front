@@ -4,6 +4,7 @@ import {
   LikePostButton,
   ReplyButton,
   CreateReplyForm,
+  RepostButton,
 } from "src/features/post";
 import { $post } from "src/pages/post/model";
 import { BaseLayout } from "src/shared/ui";
@@ -33,6 +34,7 @@ function Main() {
             source={post}
             repliesCount={post.repliesCount}
           />,
+          <RepostButton parentPost={post} />,
           <LikePostButton
             key={"likeButton"}
             postId={post.id}
@@ -42,6 +44,7 @@ function Main() {
         ]}
       />
       <CreateReplyForm sourceId={post.id} />
+
       {post.childPosts.map((post) => (
         <PostView
           layout="feed"

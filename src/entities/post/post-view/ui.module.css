@@ -34,34 +34,3 @@ a {
   flex-direction: column;
   gap: 1px;
 }
-.imagesContainer {
-  display: grid;
-  border-radius: 20px;
-  margin-bottom: 20px;
-  overflow: hidden;
-  gap: 1px;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-}
-.three {
-  display: grid;
-  max-height: 400px;
-}
-.three :nth-child(1) {
-  grid-row: span 2;
-}
-
-.two {
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-}
-.one {
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-}
-
-.image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}

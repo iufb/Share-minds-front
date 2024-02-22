@@ -67,14 +67,14 @@
   background: inherit;
 }
 .green > svg {
-  color: var(--mantine-color-green-4);
+  color: rgb(var(--rgb-green-color));
 }
 
 .green:hover {
   background: rgba(var(--rgb-green-color), 0.1);
 }
 .green > svg:hover {
-  color: var(--mantine-color-green-8);
+  color: rgb(var(--rgb-green-color));
 }
 .unactive {
   background: inherit;
