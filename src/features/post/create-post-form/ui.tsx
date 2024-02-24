@@ -8,7 +8,7 @@ import {
 } from "@mantine/core";
 import { useUnit } from "effector-react";
 import { ChangeEventHandler, FC, FormEventHandler } from "react";
-import { PostType } from "src/shared/api/post";
+import { Post } from "src/shared/api/post";
 import { $user } from "src/shared/session";
 import { FileInput, ImagesPreview } from "src/shared/ui";
 import { getImgUrl } from "src/shared/utils";
@@ -21,7 +21,7 @@ import {
 import styles from "./ui.module.css";
 import { RepostView } from "src/entities/post";
 interface CreatePostFormProps {
-  parentPost?: PostType;
+  parentPost?: Post;
 }
 export const CreatePostForm: FC<CreatePostFormProps> = ({ parentPost }) => {
   const [user, pending, img, readedFiles] = useUnit([

@@ -1,6 +1,6 @@
 import { Avatar, Box, Grid, Text } from "@mantine/core";
 import { FC, ReactElement, ReactNode, cloneElement } from "react";
-import { PostType } from "src/shared/api/post";
+import { Post } from "src/shared/api/post";
 import styles from "./ui.module.css";
 import clsx from "clsx";
 import { Link } from "atomic-router-react";
@@ -9,7 +9,7 @@ import { PostReactPanel } from "src/entities/post";
 import { getImgUrl } from "src/shared/utils";
 import { ImagesView } from "src/shared/ui";
 interface PostViewProps {
-  post: PostType;
+  post: Post;
   layout?: "feed" | "post";
   controlButtons: ReactNode[];
   isSource?: boolean;
@@ -35,7 +35,7 @@ export const PostView: FC<PostViewProps> = ({
                 btn as ReactElement<{
                   replyPostForm: ReactNode;
                   repliesCount: number;
-                  source?: PostType;
+                  source?: Post;
                 }>,
                 { source: post.source },
               );
@@ -85,7 +85,7 @@ export const PostView: FC<PostViewProps> = ({
   );
 };
 interface PostHeaderProps {
-  post: PostType;
+  post: Post;
   isFeed: boolean;
   layout: "feed" | "post";
 }

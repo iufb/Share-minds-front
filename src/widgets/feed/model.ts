@@ -3,7 +3,7 @@ import * as api from "src/shared/api/post";
 import { $isRepost, createPostFx } from "src/features/post";
 export const startLoadPosts = createEvent();
 export const getPostsFx = attach({ effect: api.getPostsFx });
-export const $posts = createStore<api.PostType[]>([]);
+export const $posts = createStore<api.Post[]>([]);
 export const $pending = getPostsFx.pending;
 $posts.on(getPostsFx.doneData, (_, posts) => posts);
 sample({

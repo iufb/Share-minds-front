@@ -1,11 +1,11 @@
 import { Box, Group, Avatar, Text } from "@mantine/core";
 import { getImgUrl } from "src/shared/utils";
 import styles from "./ui.module.css";
-import { PostType } from "src/shared/api/post";
+import { Post } from "src/shared/api/post";
 import { FC } from "react";
 import { ImagesView } from "src/shared/ui";
 interface RepostViewProps {
-  repost: PostType;
+  repost: Post;
   variant: "collapsed" | "full";
 }
 export const RepostView: FC<RepostViewProps> = ({ repost, variant }) => {

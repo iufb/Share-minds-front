@@ -32,8 +32,8 @@ sample({
 });
 
 // Refetch repost count when new repost created
-type ValidSource = { sourceId: number } & api.PostType;
-type UnvalidSource = { sourceId: null } & api.PostType;
+type ValidSource = { sourceId: number } & api.Post;
+type UnvalidSource = { sourceId: null } & api.Post;
 sample({
   clock: createRepostFx.doneData,
   filter: (clock: ValidSource | UnvalidSource): clock is ValidSource =>

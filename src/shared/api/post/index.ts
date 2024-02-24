@@ -1,21 +1,22 @@
 import { createEffect } from "effector";
 import { User } from "src/shared/api/user";
 import { requestFx } from "src/shared/utils";
-export interface PostType {
+export interface Post {
   id: number;
   author: User;
   isRepost?: boolean;
   sourceId: number | null;
-  source?: PostType;
-  childPosts: PostType[];
+  source?: Post;
+  childPosts: Post[];
   isLiked: boolean;
   likesCount: number;
   content: string;
   images: string[];
   repliesCount: number;
 }
+
 export interface CreatePostRequest extends FormData {}
-export type CreatePostResponse = PostType;
+export type CreatePostResponse = Post;
 export type PostError = {
   status: number;
   message: string;
@@ -32,13 +33,13 @@ export const createPostFx = createEffect<
     body: { multipart: form },
   });
 });
-export const getPostsFx = createEffect<void, PostType[], PostError>(() =>
+export const getPostsFx = createEffect<void, Post[], PostError>(() =>
   requestFx({
     path: "posts",
     method: "GET",
   }),
 );
-export const getPostFx = createEffect<number, PostType, PostError>((id) =>
+export const getPostFx = createEffect<number, Post, PostError>((id) =>
   requestFx({ path: `posts/${id}`, method: "GET" }),
 );
 export interface RepostCountResponse {
@@ -54,6 +55,11 @@ export const getRepostsCountFx = createEffect<
   RepostCountResponse,
   PostError
 >((id) => requestFx({ path: `posts/repostsCount/${id}`, method: "GET" }));
+
+export const getRepliesCountFx = createEffect<number | null, number, PostError>(
+  (id) => requestFx({ path: `posts/repliesCount/${id}`, method: "GET" }),
+);
+
 interface LikePostRequest {
   sourceId: number;
 }

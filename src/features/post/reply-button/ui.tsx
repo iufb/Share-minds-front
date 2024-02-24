@@ -1,24 +1,30 @@
 import { Avatar, Box, Grid, Modal, Text } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconMessageCircle } from "@tabler/icons-react";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { ReactPanelButton } from "src/entities/post";
 import { CreateReplyForm } from "src/features/post";
-import { PostType } from "src/shared/api/post";
+import { Post } from "src/shared/api/post";
 import { getImgUrl } from "src/shared/utils";
 import styles from "./ui.module.css";
+import { useUnit } from "effector-react";
+import { $repliesCount, buttonMounted } from "./model";
 interface ReplyButtonProps {
   repliesCount: number;
-  source: PostType;
+  source: Post;
 }
 export const ReplyButton: FC<ReplyButtonProps> = ({ repliesCount, source }) => {
   const [opened, { open, close }] = useDisclosure(false);
+  const updatedCount = useUnit($repliesCount);
   const fullScreenModal = useMediaQuery("(max-width: 500px)");
+  useEffect(() => {
+    buttonMounted(repliesCount);
+  }, []);
   return (
     <>
       <ReactPanelButton
         icon={<IconMessageCircle size={18} />}
-        quantity={repliesCount}
+        quantity={updatedCount}
         action={open}
         active={false}
         activeColor="blue"

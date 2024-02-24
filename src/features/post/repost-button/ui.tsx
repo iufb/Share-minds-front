@@ -13,9 +13,9 @@ import {
 } from "./model";
 import styles from "./ui.module.css";
 import { CreatePostForm } from "src/features/post";
-import { PostType } from "src/shared/api/post";
+import { Post } from "src/shared/api/post";
 interface RepostButtonProps {
-  parentPost: PostType;
+  parentPost: Post;
 }
 export const RepostButton: FC<RepostButtonProps> = ({ parentPost }) => {
   const [popupModalStatus, setPopupStatus] = useState(false);
