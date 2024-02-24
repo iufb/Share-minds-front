@@ -1,4 +1,6 @@
+import { invoke } from "@withease/factories";
 import { attach, createEvent, createStore, sample } from "effector";
+import { createPostFx } from "src/features/post";
 import * as api from "src/shared/api/post";
 import { User } from "src/shared/api/user";
 import { $user } from "src/shared/session";
@@ -15,8 +17,7 @@ export const quoteButtonClicked = createEvent();
 export const buttonMounted = createEvent<number>();
 
 //Stores
-export const repostPopupStatus = createToggle();
-export const repostModalStatus = createToggle();
+export const repostModalStatus = invoke(createToggle, { status: false });
 const $postId = createStore<number | null>(null);
 export const $repostsInfo = createStore<api.RepostCountResponse | null>(null);
 $repostsInfo.on(getRepostsCount.doneData, (_, count) => count);
@@ -24,6 +25,10 @@ $postId.on(buttonMounted, (_, id) => id);
 sample({
   clock: buttonMounted,
   target: getRepostsCount,
+});
+sample({
+  clock: createPostFx.done,
+  target: repostModalStatus.closed,
 });
 
 // Refetch repost count when new repost created
@@ -34,7 +39,7 @@ sample({
   filter: (clock: ValidSource | UnvalidSource): clock is ValidSource =>
     !!clock.sourceId,
   fn: ({ sourceId }) => sourceId,
-  target: [getRepostsCount, repostPopupStatus.closed],
+  target: getRepostsCount,
 });
 
 //Create repost without quote
@@ -53,7 +58,6 @@ sample({
   target: createRepostFx,
 });
 //Unrepost
-$repostsInfo.watch((w) => console.log(w));
 sample({
   clock: unrepostButtonClicked,
   source: $repostsInfo,

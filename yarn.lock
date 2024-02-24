@@ -1165,6 +1165,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@withease/factories@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "@withease/factories@npm:1.0.3"
+  checksum: 401ddcc1cfbdc659a39088772a3c95cc419b77f9e725cb04c8e13f4ecddeb4953ecfc5ff314c681fa1e2060a225553ddd4716297fb65fe7f9b558536381b1e1e
+  languageName: node
+  linkType: hard
+
 "abbrev@npm:^2.0.0":
   version: 2.0.0
   resolution: "abbrev@npm:2.0.0"
@@ -3701,6 +3708,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^6.9.1"
     "@typescript-eslint/parser": "npm:^6.9.1"
     "@vitejs/plugin-react": "npm:^4.2.1"
+    "@withease/factories": "npm:^1.0.3"
     atomic-router: "npm:^0.9.3"
     atomic-router-react: "npm:^0.9.1"
     clsx: "npm:^2.1.0"

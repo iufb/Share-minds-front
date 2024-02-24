@@ -1,12 +1,12 @@
-import { Avatar, Box, Text, Grid } from "@mantine/core";
+import { Avatar, Box, Grid, Text } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import { useUnit } from "effector-react";
-import { $user } from "src/shared/session";
-import { getImgUrl } from "src/shared/utils";
-import styles from "./ui.module.css";
 import { FC, ReactNode, useRef, useState } from "react";
 import { useClickOutside } from "src/shared/hooks/useClickOutside";
-import { Modal } from "src/shared/ui";
+import { $user } from "src/shared/session";
+import { PopupModal } from "src/shared/ui";
+import { getImgUrl } from "src/shared/utils";
+import styles from "./ui.module.css";
 interface UserProfileButtonProps {
   logout: ReactNode;
 }
@@ -40,9 +40,9 @@ export const UserProfileButton: FC<UserProfileButtonProps> = ({ logout }) => {
         </Grid>
       </Box>
       {open && (
-        <Modal className={styles["modal"]} onClose={() => setOpen(false)}>
+        <PopupModal className={styles["modal"]} onClose={() => setOpen(false)}>
           {logout}
-        </Modal>
+        </PopupModal>
       )}
     </Box>
   );

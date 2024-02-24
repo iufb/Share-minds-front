@@ -1,4 +1,4 @@
-import { attach, createEvent, sample } from "effector";
+import { attach, createEvent, createStore, sample } from "effector";
 import { and, every, not, reset } from "patronum";
 import * as api from "src/shared/api/post";
 import * as utils from "src/shared/utils";
@@ -13,6 +13,7 @@ export const formSubmited = createEvent<{
   sourceId: number | null;
 }>();
 //stores
+export const $isRepost = createStore(false);
 export const contentField = createField({
   defaultValue: "",
   validate: {
@@ -32,12 +33,18 @@ const $formValid = every({
 });
 export const selectedFiles = utils.getImagePreview();
 export const $formPending = createPostFx.pending;
-
+sample({
+  clock: formSubmited,
+  filter: ({ isRepost }) => isRepost,
+  fn: () => true,
+  target: $isRepost,
+});
 type ValidSource = { user: User; content: string };
 type UnvalidSource = {
   user: null;
   content: string;
 };
+
 type Source = ValidSource | UnvalidSource;
 sample({
   clock: formSubmited,

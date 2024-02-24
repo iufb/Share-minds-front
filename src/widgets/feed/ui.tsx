@@ -20,12 +20,12 @@ export const Feed = () => {
         controlButtons={[
           <ReplyButton
             repliesCount={post.repliesCount}
-            key={"replyButton"}
+            key={`replyButton ${post.id}`}
             source={post}
           />,
-          <RepostButton parentPost={post} />,
+          <RepostButton key={`repostButton ${post.id}`} parentPost={post} />,
           <LikePostButton
-            key={"likeButton"}
+            key={`likeButton ${post.id}`}
             postId={post.id}
             likesCount={post.likesCount}
             isLiked={post.isLiked}

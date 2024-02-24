@@ -1,6 +1,6 @@
 import { attach, createEvent, createStore, sample } from "effector";
 import * as api from "src/shared/api/post";
-import { createPostFx } from "src/features/post";
+import { $isRepost, createPostFx } from "src/features/post";
 export const startLoadPosts = createEvent();
 export const getPostsFx = attach({ effect: api.getPostsFx });
 export const $posts = createStore<api.PostType[]>([]);
@@ -10,9 +10,11 @@ sample({
   clock: startLoadPosts,
   target: getPostsFx,
 });
+$isRepost.watch((v) => console.log(v, ">>>"));
 sample({
   clock: createPostFx.doneData,
+  source: $isRepost,
+  filter: (isRepost) => !isRepost,
   target: getPostsFx,
 });
-$posts.watch((p) => console.log(p));
 // $posts.on(createPostFx.doneData, (posts, newPost) => [...posts, newPost]);

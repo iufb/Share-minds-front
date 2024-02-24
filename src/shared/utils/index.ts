@@ -7,6 +7,7 @@ import {
   attach,
   EventCallable,
 } from "effector";
+import { createFactory } from "@withease/factories";
 
 export const getImgUrl = (params?: string | null) =>
   `${import.meta.env.VITE_BASE_URL}/${params}`;
@@ -51,14 +52,23 @@ interface ICreateField<Value, Payload, Error> {
   };
   resetOn?: Array<Event<any>>;
 }
-export function createToggle() {
-  const $status = createStore(false);
+export const createToggle = createFactory(({ status = false }) => {
+  const $status = createStore(status);
   const opened = createEvent();
   const closed = createEvent();
-  $status.on(opened, () => true);
-  $status.on(closed, () => false);
+  sample({
+    clock: opened,
+    fn: () => true,
+    target: $status,
+  });
+  sample({
+    clock: closed,
+    fn: () => false,
+    target: $status,
+  });
+
   return { $status, opened, closed };
-}
+});
 // Field factory
 export function createField<Value, Payload, Error>(
   options: ICreateField<Value, Payload, Error>,

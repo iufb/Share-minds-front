@@ -1,10 +1,4 @@
-import {
-  EventCallable,
-  attach,
-  createEvent,
-  createStore,
-  sample,
-} from "effector";
+import { attach, createEvent, sample } from "effector";
 import { and, every, not, reset } from "patronum";
 import * as api from "src/shared/api/post";
 import * as utils from "src/shared/utils";
