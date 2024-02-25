@@ -13,18 +13,18 @@ interface ReplyButtonProps {
   repliesCount: number;
   source: Post;
 }
-export const ReplyButton: FC<ReplyButtonProps> = ({ repliesCount, source }) => {
+export const ReplyButton: FC<ReplyButtonProps> = ({ source }) => {
   const [opened, { open, close }] = useDisclosure(false);
-  const updatedCount = useUnit($repliesCount);
+  const repliesCount = useUnit($repliesCount);
   const fullScreenModal = useMediaQuery("(max-width: 500px)");
   useEffect(() => {
-    buttonMounted(repliesCount);
+    buttonMounted({ sourceId: source.id });
   }, []);
   return (
     <>
       <ReactPanelButton
         icon={<IconMessageCircle size={18} />}
-        quantity={updatedCount}
+        quantity={repliesCount ? repliesCount[source.id] : 0}
         action={open}
         active={false}
         activeColor="blue"

@@ -56,9 +56,11 @@ export const getRepostsCountFx = createEffect<
   PostError
 >((id) => requestFx({ path: `posts/repostsCount/${id}`, method: "GET" }));
 
-export const getRepliesCountFx = createEffect<number | null, number, PostError>(
-  (id) => requestFx({ path: `posts/repliesCount/${id}`, method: "GET" }),
-);
+export const getRepliesCountFx = createEffect<
+  number | null,
+  { sourceId: number; count: number },
+  PostError
+>((id) => requestFx({ path: `posts/repliesCount/${id}`, method: "GET" }));
 
 interface LikePostRequest {
   sourceId: number;

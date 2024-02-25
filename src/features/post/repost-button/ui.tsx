@@ -3,7 +3,9 @@ import { IconPencilPlus, IconRepeat } from "@tabler/icons-react";
 import { useUnit } from "effector-react";
 import { FC, useEffect, useState } from "react";
 import { ReactPanelButton } from "src/entities/post";
-import { Button, PopupModal, Modal } from "src/shared/ui";
+import { CreatePostForm } from "src/features/post";
+import { Post } from "src/shared/api/post";
+import { Button, Modal, PopupModal } from "src/shared/ui";
 import {
   $repostsInfo,
   buttonMounted,
@@ -12,8 +14,6 @@ import {
   unrepostButtonClicked,
 } from "./model";
 import styles from "./ui.module.css";
-import { CreatePostForm } from "src/features/post";
-import { Post } from "src/shared/api/post";
 interface RepostButtonProps {
   parentPost: Post;
 }
