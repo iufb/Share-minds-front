@@ -11,7 +11,7 @@ import { ImagesView } from "src/shared/ui";
 interface PostViewProps {
   post: Post;
   layout?: "feed" | "post";
-  controlButtons: ReactNode[];
+  controlButtons: Record<string, ReactNode>;
   isSource?: boolean;
 }
 
@@ -29,19 +29,19 @@ export const PostView: FC<PostViewProps> = ({
         <PostView
           isSource={true}
           post={post.source}
-          controlButtons={controlButtons.map((btn, idx) => {
-            if (idx === 0) {
-              return cloneElement(
-                btn as ReactElement<{
-                  replyPostForm: ReactNode;
-                  repliesCount: number;
-                  source?: Post;
-                }>,
-                { source: post.source },
-              );
-            }
-            return btn;
-          })}
+          controlButtons={{
+            ...controlButtons,
+            ["reply"]: cloneElement(
+              controlButtons["reply"] as ReactElement<{
+                replyPostForm: ReactNode;
+                repliesCount: number;
+                source?: Post;
+              }>,
+              {
+                source: post.source,
+              },
+            ),
+          }}
           layout={"feed"}
         />
       )}

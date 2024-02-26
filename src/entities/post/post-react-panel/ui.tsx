@@ -2,7 +2,7 @@ import { Group } from "@mantine/core";
 import { FC, ReactNode } from "react";
 import styles from "./ui.module.css";
 interface PostReactPanelProps {
-  controlButtons: ReactNode[];
+  controlButtons: Record<string, ReactNode>;
   showBorder: boolean;
 }
 export const PostReactPanel: FC<PostReactPanelProps> = ({
@@ -17,7 +17,7 @@ export const PostReactPanel: FC<PostReactPanelProps> = ({
       py={10}
       align="center"
     >
-      {controlButtons.map((controlButton) => controlButton)}
+      {Object.values(controlButtons).map((controlButton) => controlButton)}
     </Group>
   );
 };
