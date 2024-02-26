@@ -21,13 +21,10 @@ export const RepostButton: FC<RepostButtonProps> = ({ parentPost }) => {
   const [popupModalStatus, setPopupStatus] = useState(false);
   const popupOpened = () => setPopupStatus(true);
   const closePopup = () => setPopupStatus(false);
-  const [repostsInfo, quoteModalStatus, openQuoteModal, closeQuoteModal] =
-    useUnit([
-      $repostsInfo,
-      repostModalStatus.$status,
-      repostModalStatus.opened,
-      repostModalStatus.closed,
-    ]);
+  const [repostsInfo, quoteModalStatus] = useUnit([
+    $repostsInfo,
+    repostModalStatus.$status,
+  ]);
   useEffect(() => {
     if (parentPost) buttonMounted(parentPost.id);
   }, []);
@@ -60,7 +57,9 @@ export const RepostButton: FC<RepostButtonProps> = ({ parentPost }) => {
               </Button>
             )}
             <Button
-              onClick={() => openQuoteModal()}
+              onClick={() =>
+                repostModalStatus.change({ id: parentPost.id, value: true })
+              }
               icon={<IconPencilPlus size={20} />}
             >
               Quote
@@ -70,8 +69,11 @@ export const RepostButton: FC<RepostButtonProps> = ({ parentPost }) => {
       </Box>
       <Modal
         title="Create Repost"
-        opened={quoteModalStatus}
-        close={closeQuoteModal}
+        opened={quoteModalStatus[parentPost.id]}
+        close={() => {
+          repostModalStatus.change({ id: parentPost.id, value: false });
+          closePopup();
+        }}
       >
         <CreatePostForm parentPost={parentPost} />
       </Modal>

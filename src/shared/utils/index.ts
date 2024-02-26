@@ -52,23 +52,13 @@ interface ICreateField<Value, Payload, Error> {
   };
   resetOn?: Array<Event<any>>;
 }
-export const createToggle = createFactory(({ status = false }) => {
-  const $status = createStore(status);
-  const opened = createEvent();
-  const closed = createEvent();
-  sample({
-    clock: opened,
-    fn: () => true,
-    target: $status,
-  });
-  sample({
-    clock: closed,
-    fn: () => false,
-    target: $status,
-  });
+export const createToggle = () => {
+  const $status = createStore<Record<number, boolean>>({});
+  const change = createEvent<{ id: number; value: boolean }>();
+  $status.on(change, (state, { id, value }) => ({ ...state, [id]: value }));
 
-  return { $status, opened, closed };
-});
+  return { $status, change };
+};
 // Field factory
 export function createField<Value, Payload, Error>(
   options: ICreateField<Value, Payload, Error>,

@@ -24,6 +24,8 @@ interface CreatePostFormProps {
   parentPost?: Post;
 }
 export const CreatePostForm: FC<CreatePostFormProps> = ({ parentPost }) => {
+  console.log(parentPost?.id);
+
   const [user, pending, img, readedFiles] = useUnit([
     $user,
     $formPending,

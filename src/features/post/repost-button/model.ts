@@ -1,4 +1,3 @@
-import { invoke } from "@withease/factories";
 import { attach, createEvent, createStore, sample } from "effector";
 import { createPostFx } from "src/features/post";
 import * as api from "src/shared/api/post";
@@ -17,7 +16,7 @@ export const quoteButtonClicked = createEvent();
 export const buttonMounted = createEvent<number>();
 
 //Stores
-export const repostModalStatus = invoke(createToggle, { status: false });
+export const repostModalStatus = createToggle();
 const $postId = createStore<number | null>(null);
 export const $repostsInfo = createStore<api.RepostCountResponse | null>(null);
 $repostsInfo.on(getRepostsCount.doneData, (_, count) => count);
@@ -28,7 +27,10 @@ sample({
 });
 sample({
   clock: createPostFx.done,
-  target: repostModalStatus.closed,
+  source: $postId,
+  filter: (postId: number | null): postId is number => postId !== null,
+  fn: (postId) => ({ id: postId, value: false }),
+  target: repostModalStatus.change,
 });
 
 // Refetch repost count when new repost created
