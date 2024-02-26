@@ -65,7 +65,8 @@ sample({
       JSON.stringify({
         authorId: user.id,
         content,
-        isRepost: isRepost ? isRepost : null,
+        isRepost: isRepost,
+        isReply: false,
         sourceId: sourceId ? sourceId : null,
       }),
     );

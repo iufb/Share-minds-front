@@ -51,7 +51,7 @@ sample({
     const formdata = new FormData();
     formdata.append(
       "post",
-      JSON.stringify({ authorId: user.id, content, sourceId }),
+      JSON.stringify({ authorId: user.id, content, sourceId, isReply: true }),
     );
     selectedFiles.files.$value.map(
       (files) => {

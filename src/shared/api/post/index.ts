@@ -4,7 +4,8 @@ import { requestFx } from "src/shared/utils";
 export interface Post {
   id: number;
   author: User;
-  isRepost?: boolean;
+  isRepost: boolean;
+  isReply: boolean;
   sourceId: number | null;
   source?: Post;
   childPosts: Post[];
@@ -51,6 +52,13 @@ export const getUserReplies = createEffect<void, Post[], PostError>(() =>
     method: "GET",
   }),
 );
+export const getUserPosts = createEffect<void, Post[], PostError>(() =>
+  requestFx({
+    path: "posts/user",
+    method: "GET",
+  }),
+);
+
 export const getPostFx = createEffect<number, Post, PostError>((id) =>
   requestFx({ path: `posts/${id}`, method: "GET" }),
 );
