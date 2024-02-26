@@ -39,6 +39,18 @@ export const getPostsFx = createEffect<void, Post[], PostError>(() =>
     method: "GET",
   }),
 );
+export const getLikedPostsFx = createEffect<void, Post[], PostError>(() =>
+  requestFx({
+    path: "posts/liked",
+    method: "GET",
+  }),
+);
+export const getUserReplies = createEffect<void, Post[], PostError>(() =>
+  requestFx({
+    path: "posts/replies",
+    method: "GET",
+  }),
+);
 export const getPostFx = createEffect<number, Post, PostError>((id) =>
   requestFx({ path: `posts/${id}`, method: "GET" }),
 );

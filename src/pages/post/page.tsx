@@ -26,43 +26,56 @@ function Main() {
     <>
       <PostView
         key={post.id}
-        layout="post"
         post={post}
-        controlButtons={[
-          <ReplyButton
-            key="reply"
-            source={post}
-            repliesCount={post.repliesCount}
-          />,
-          <RepostButton parentPost={post} />,
-          <LikePostButton
-            key={"likeButton"}
-            postId={post.id}
-            likesCount={post.likesCount}
-            isLiked={post.isLiked}
-          />,
-        ]}
+        layout={"post"}
+        controlButtons={{
+          reply: (
+            <ReplyButton
+              repliesCount={post.repliesCount}
+              key={`replyButton ${post.id}`}
+              source={post}
+            />
+          ),
+          repost: (
+            <RepostButton key={`repostButton ${post.id}`} parentPost={post} />
+          ),
+          like: (
+            <LikePostButton
+              key={`likeButton ${post.id}`}
+              postId={post.id}
+              likesCount={post.likesCount}
+              isLiked={post.isLiked}
+            />
+          ),
+        }}
       />
       <CreateReplyForm sourceId={post.id} />
 
       {post.childPosts.map((post) => (
         <PostView
-          layout="feed"
           key={post.id}
           post={post}
-          controlButtons={[
-            <ReplyButton
-              key={"reply"}
-              source={post}
-              repliesCount={post.repliesCount}
-            />,
-            <LikePostButton
-              key={"likeButton"}
-              postId={post.id}
-              likesCount={post.likesCount}
-              isLiked={post.isLiked}
-            />,
-          ]}
+          layout={"feed"}
+          controlButtons={{
+            reply: (
+              <ReplyButton
+                repliesCount={post.repliesCount}
+                key={`replyButton ${post.id}`}
+                source={post}
+              />
+            ),
+            repost: (
+              <RepostButton key={`repostButton ${post.id}`} parentPost={post} />
+            ),
+            like: (
+              <LikePostButton
+                key={`likeButton ${post.id}`}
+                postId={post.id}
+                likesCount={post.likesCount}
+                isLiked={post.isLiked}
+              />
+            ),
+          }}
         />
       ))}
     </>

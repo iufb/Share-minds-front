@@ -59,6 +59,7 @@ export const PostView: FC<PostViewProps> = ({
             >
               <Avatar
                 color="light-blue.9"
+                className={clsx(!post.author.avatar && styles["blackBg"])}
                 src={getImgUrl(post.author.avatar)}
               />
               {isSource && <hr className={styles["stroke"]} />}
