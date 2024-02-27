@@ -1,13 +1,14 @@
-import { Avatar, Box, Grid, Text } from "@mantine/core";
+import { Avatar, Box, Grid, Group, Text } from "@mantine/core";
 import { FC, ReactElement, ReactNode, cloneElement } from "react";
 import { Post } from "src/shared/api/post";
 import styles from "./ui.module.css";
 import clsx from "clsx";
 import { Link } from "atomic-router-react";
 import { routes } from "src/shared/routing";
-import { PostReactPanel } from "src/entities/post";
+import { PostReactPanel, RepostView } from "src/entities/post";
 import { getImgUrl } from "src/shared/utils";
 import { ImagesView } from "src/shared/ui";
+import { IconRepeat } from "@tabler/icons-react";
 interface PostViewProps {
   post: Post;
   layout?: "feed" | "post";
@@ -25,7 +26,7 @@ export const PostView: FC<PostViewProps> = ({
 
   return (
     <>
-      {post.source && (
+      {post.source && !post.isRepost && (
         <PostView
           isSource={true}
           post={post.source}
@@ -44,6 +45,13 @@ export const PostView: FC<PostViewProps> = ({
           }}
           layout={"feed"}
         />
+      )}
+
+      {!post.content && post.isRepost && (
+        <Group align="center" gap={3} fz={"sm"} c={"gray"} ml={10} mt={5}>
+          <IconRepeat />
+          You reposted
+        </Group>
       )}
       <Grid
         className={clsx(!isSource && styles["withBorder"])}
@@ -76,6 +84,9 @@ export const PostView: FC<PostViewProps> = ({
             <Box my={10}>{post.content}</Box>
           )}
           <ImagesView images={post.images} />
+          {post.source && post.isRepost && (
+            <RepostView repost={post.source} variant="full" />
+          )}
           <PostReactPanel
             showBorder={!isFeed}
             controlButtons={controlButtons}

@@ -18,8 +18,14 @@ export const buttonMounted = createEvent<number>();
 //Stores
 export const repostModalStatus = createToggle();
 const $postId = createStore<number | null>(null);
-export const $repostsInfo = createStore<api.RepostCountResponse | null>(null);
-$repostsInfo.on(getRepostsCount.doneData, (_, count) => count);
+export const $repostsInfo = createStore<Record<
+  number,
+  api.RepostCountResponse
+> | null>(null);
+$repostsInfo.on(getRepostsCount.doneData, (state, result) => ({
+  ...state,
+  [result.sourceId]: result,
+}));
 $postId.on(buttonMounted, (_, id) => id);
 sample({
   clock: buttonMounted,

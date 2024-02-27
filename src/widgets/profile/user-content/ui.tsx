@@ -4,6 +4,7 @@ import { useUnit } from "effector-react";
 import { $activeTab, $tabContent, changeActiveTab } from "./model";
 import { PostView, RepostView } from "src/entities/post";
 import { ReplyButton, RepostButton, LikePostButton } from "src/features/post";
+import { Post } from "src/shared/api/post";
 
 const tablist = ["Posts", "Replies", "Likes"];
 

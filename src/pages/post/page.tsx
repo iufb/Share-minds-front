@@ -1,5 +1,5 @@
 import { useUnit } from "effector-react";
-import { PostView } from "src/entities/post";
+import { PostView, RepostView } from "src/entities/post";
 import {
   LikePostButton,
   ReplyButton,
@@ -49,8 +49,8 @@ function Main() {
           ),
         }}
       />
-      <CreateReplyForm sourceId={post.id} />
 
+      <CreateReplyForm sourceId={post.id} />
       {post.childPosts.map((post) => (
         <PostView
           key={post.id}

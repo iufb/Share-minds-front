@@ -25,6 +25,11 @@ export const RepostButton: FC<RepostButtonProps> = ({ parentPost }) => {
     $repostsInfo,
     repostModalStatus.$status,
   ]);
+
+  const currentPostInfo = repostsInfo
+    ? repostsInfo[parentPost.id]
+    : { isReposted: false, count: 0 };
+
   useEffect(() => {
     if (parentPost) buttonMounted(parentPost.id);
   }, []);
@@ -35,13 +40,13 @@ export const RepostButton: FC<RepostButtonProps> = ({ parentPost }) => {
         <ReactPanelButton
           icon={<IconRepeat size={18} />}
           action={popupOpened}
-          active={repostsInfo?.isReposted ?? false}
+          active={currentPostInfo ? currentPostInfo.isReposted : false}
           activeColor="green"
-          quantity={repostsInfo?.count ?? 0}
+          quantity={currentPostInfo ? currentPostInfo.count : 0}
         />
         {popupModalStatus && (
           <PopupModal className={styles["modal"]} onClose={closePopup}>
-            {repostsInfo?.isReposted ? (
+            {currentPostInfo.isReposted ? (
               <Button
                 onClick={() => unrepostButtonClicked()}
                 icon={<IconRepeat size={20} />}
