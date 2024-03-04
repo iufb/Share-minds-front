@@ -2,6 +2,7 @@ import { Center, Loader, Stack } from "@mantine/core";
 import { useUnit } from "effector-react";
 import { PostView } from "src/entities/post";
 import {
+  BookmarkButton,
   CreatePostForm,
   LikePostButton,
   ReplyButton,
@@ -42,8 +43,17 @@ export const Feed = () => {
                   <LikePostButton
                     key={`likeButton ${post.id}`}
                     postId={post.id}
-                    likesCount={post.likesCount}
+                    likesCount={post._count.likes}
                     isLiked={post.isLiked}
+                  />
+                ),
+                bookmark: (
+                  <BookmarkButton
+                    key={`bookmark button ${post.id}`}
+                    postId={post.id}
+                    count={post._count.bookmarks}
+                    //TODO
+                    bookmarked={post.bookmarked}
                   />
                 ),
               }}

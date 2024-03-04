@@ -5,12 +5,16 @@ export interface Post {
   id: number;
   author: User;
   isRepost: boolean;
+  bookmarked: boolean;
   isReply: boolean;
   sourceId: number | null;
   source?: Post;
   childPosts: Post[];
   isLiked: boolean;
-  likesCount: number;
+  _count: {
+    bookmarks: number;
+    likes: number;
+  };
   content: string;
   images: string[];
   repliesCount: number;
@@ -106,4 +110,33 @@ export const unlikePostFx = createEffect<UnlikePostRequest, LikePostResponse>(
       path: `likes/${sourceId}`,
       method: "DELETE",
     }),
+);
+
+interface CreateBookmarkRequest {
+  postId: number;
+}
+interface DeleteBookmarkRequest {
+  postId: number;
+}
+
+interface BookmarkResponse {
+  post: Post;
+  userId: number;
+  postId: number;
+}
+export const createBookmarkFx = createEffect<
+  CreateBookmarkRequest,
+  BookmarkResponse
+>((body) =>
+  requestFx({ path: "bookmarks", method: "POST", body: { json: body } }),
+);
+
+export const deleteBookmarkFx = createEffect<
+  DeleteBookmarkRequest,
+  BookmarkResponse
+>(({ postId }) =>
+  requestFx({
+    path: `bookmarks/${postId}`,
+    method: "DELETE",
+  }),
 );

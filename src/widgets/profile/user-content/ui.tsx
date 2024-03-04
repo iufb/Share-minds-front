@@ -66,7 +66,7 @@ export const UserContent = () => {
                   <LikePostButton
                     key={`likeButton ${post.id}`}
                     postId={post.id}
-                    likesCount={post.likesCount}
+                    likesCount={post._count.likes}
                     isLiked={post.isLiked}
                   />
                 ),
