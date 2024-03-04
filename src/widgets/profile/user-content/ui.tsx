@@ -1,15 +1,22 @@
-import { Tabs } from "@mantine/core";
-import styles from "./ui.module.css";
+import { Center, Loader, Tabs } from "@mantine/core";
 import { useUnit } from "effector-react";
-import { $activeTab, $tabContent, changeActiveTab } from "./model";
-import { PostView, RepostView } from "src/entities/post";
-import { ReplyButton, RepostButton, LikePostButton } from "src/features/post";
-import { Post } from "src/shared/api/post";
+import { PostView } from "src/entities/post";
+import { LikePostButton, ReplyButton, RepostButton } from "src/features/post";
+import { $activeTab, $loading, $tabContent, changeActiveTab } from "./model";
+import styles from "./ui.module.css";
+import { useEffect } from "react";
 
 const tablist = ["Posts", "Replies", "Likes"];
 
 export const UserContent = () => {
-  const [activeTab, tabContent] = useUnit([$activeTab, $tabContent]);
+  const [activeTab, tabContent, loading] = useUnit([
+    $activeTab,
+    $tabContent,
+    $loading,
+  ]);
+  useEffect(() => {
+    changeActiveTab("Posts");
+  }, []);
   return (
     <Tabs
       color="light-blue.9"
@@ -30,6 +37,11 @@ export const UserContent = () => {
       </Tabs.List>
 
       <Tabs.Panel value={activeTab ?? ""} pt={20}>
+        {loading && (
+          <Center>
+            <Loader />
+          </Center>
+        )}
         {tabContent.map((post) => {
           return (
             <PostView
@@ -62,7 +74,6 @@ export const UserContent = () => {
             />
           );
         })}
-        ;
       </Tabs.Panel>
     </Tabs>
   );

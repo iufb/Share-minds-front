@@ -40,21 +40,23 @@ export const getPostsFx = createEffect<void, Post[], PostError>(() =>
     method: "GET",
   }),
 );
-export const getLikedPostsFx = createEffect<void, Post[], PostError>(() =>
-  requestFx({
-    path: "posts/liked",
-    method: "GET",
-  }),
+export const getLikedPostsFx = createEffect<number, Post[], PostError>(
+  (userId) =>
+    requestFx({
+      path: `posts/liked/${userId}`,
+      method: "GET",
+    }),
 );
-export const getUserReplies = createEffect<void, Post[], PostError>(() =>
-  requestFx({
-    path: "posts/replies",
-    method: "GET",
-  }),
+export const getUserReplies = createEffect<number, Post[], PostError>(
+  (userId) =>
+    requestFx({
+      path: `posts/replies/${userId}`,
+      method: "GET",
+    }),
 );
-export const getUserPosts = createEffect<void, Post[], PostError>(() =>
+export const getUserPosts = createEffect<number, Post[], PostError>((userId) =>
   requestFx({
-    path: "posts/user",
+    path: `posts/user/${userId}`,
     method: "GET",
   }),
 );

@@ -1,8 +1,15 @@
 import { attach, createEvent, createStore, sample } from "effector";
+import { or } from "patronum";
+import { currentRoute } from "src/pages/profile/model";
 import * as api from "src/shared/api/post";
 const getLikedPostsFx = attach({ effect: api.getLikedPostsFx });
-const getUserReplies = attach({ effect: api.getUserReplies });
-const getUserPosts = attach({ effect: api.getUserPosts });
+const getUserRepliesFx = attach({ effect: api.getUserReplies });
+const getUserPostsFx = attach({ effect: api.getUserPosts });
+export const $loading = or(
+  getUserPostsFx.pending,
+  getUserRepliesFx.pending,
+  getLikedPostsFx.pending,
+);
 //stores
 export const $activeTab = createStore<string | null>("Posts");
 export const $tabContent = createStore<api.Post[]>([]);
@@ -10,24 +17,39 @@ export const $tabContent = createStore<api.Post[]>([]);
 export const changeActiveTab = createEvent<string | null>();
 
 $activeTab.on(changeActiveTab, (_, tab) => tab);
-
 sample({
-  clock: $activeTab,
-  filter: (tab) => tab === "Likes",
+  clock: currentRoute.updated,
+  fn: () => "Posts",
+  target: changeActiveTab,
+});
+sample({
+  clock: changeActiveTab,
+  source: currentRoute.$params,
+  fn: ({ id }) => id,
+  filter: (id, tab) => tab === "Likes",
   target: getLikedPostsFx,
 });
 
 sample({
-  clock: $activeTab,
-  filter: (tab) => tab === "Replies",
-  target: getUserReplies,
+  clock: changeActiveTab,
+  source: currentRoute.$params,
+  fn: ({ id }) => id,
+  filter: (id, tab) => tab === "Replies",
+  target: getUserRepliesFx,
 });
 sample({
-  clock: $activeTab,
-  filter: (tab) => tab === "Posts",
-  target: getUserPosts,
+  clock: changeActiveTab,
+  source: currentRoute.$params,
+  fn: ({ id }) => id,
+  filter: (id, tab) => tab === "Posts",
+  target: getUserPostsFx,
 });
 
-$tabContent.on(getLikedPostsFx.doneData, (_, res) => res);
-$tabContent.on(getUserReplies.doneData, (_, res) => res);
-$tabContent.on(getUserPosts.doneData, (_, res) => res);
+$tabContent.on(
+  [
+    getLikedPostsFx.doneData,
+    getUserRepliesFx.doneData,
+    getUserPostsFx.doneData,
+  ],
+  (_, res) => res,
+);

@@ -1,21 +1,18 @@
 import { useUnit } from "effector-react";
-import { PostView, RepostView } from "src/entities/post";
+import { PostView } from "src/entities/post";
 import {
+  CreateReplyForm,
   LikePostButton,
   ReplyButton,
-  CreateReplyForm,
   RepostButton,
 } from "src/features/post";
 import { $post } from "src/pages/post/model";
 import { BaseLayout } from "src/shared/ui";
+import { Header } from "src/widgets/header";
 import { Sidebar } from "src/widgets/sidebar";
 export const PostPage = () => {
   return (
-    <BaseLayout
-      sidebar={<Sidebar />}
-      header={<div>Header</div>}
-      main={<Main />}
-    />
+    <BaseLayout sidebar={<Sidebar />} header={<Header />} main={<Main />} />
   );
 };
 function Main() {

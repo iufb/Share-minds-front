@@ -9,6 +9,9 @@ import { PostReactPanel, RepostView } from "src/entities/post";
 import { getImgUrl } from "src/shared/utils";
 import { ImagesView } from "src/shared/ui";
 import { IconRepeat } from "@tabler/icons-react";
+import { useUnit } from "effector-react";
+import { $user } from "src/shared/session";
+import { currentRoute as profileRoute } from "src/pages/profile/model";
 interface PostViewProps {
   post: Post;
   layout?: "feed" | "post";
@@ -23,7 +26,7 @@ export const PostView: FC<PostViewProps> = ({
   layout = "feed",
 }) => {
   const isFeed = layout === "feed";
-
+  const [user, params] = useUnit([$user, profileRoute.$params]);
   return (
     <>
       {post.source && !post.isRepost && (
@@ -50,7 +53,7 @@ export const PostView: FC<PostViewProps> = ({
       {!post.content && post.isRepost && (
         <Group align="center" gap={3} fz={"sm"} c={"gray"} ml={10} mt={5}>
           <IconRepeat />
-          You reposted
+          {user && user.id == params.id ? "You reposted" : "Reposted"}
         </Group>
       )}
       <Grid
