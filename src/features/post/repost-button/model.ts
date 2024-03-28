@@ -66,13 +66,26 @@ sample({
   target: createRepostFx,
 });
 //Unrepost
+type UnrepostValidSource = {
+  info: Record<number, api.RepostCountResponse>;
+  id: number;
+};
+type UnrepostInvalidSource = {
+  info: null;
+  id: null;
+};
+type Source = UnrepostValidSource | UnrepostInvalidSource;
 sample({
   clock: unrepostButtonClicked,
-  source: $repostsInfo,
-  filter: (
-    source: api.RepostCountResponse | null,
-  ): source is api.RepostCountResponse => typeof source == "object",
-  fn: ({ repostId }) => repostId,
+  source: { info: $repostsInfo, id: $postId },
+  filter: (source: Source): source is UnrepostValidSource => {
+    if (typeof source.info === "object" && typeof source.id === "number") {
+      return true;
+    } else {
+      return false;
+    }
+  },
+  fn: ({ info, id }) => info[id],
   target: unrepostFx,
 });
 

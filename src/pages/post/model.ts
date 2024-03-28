@@ -10,6 +10,7 @@ export const authorizedRoute = chainAuthorized(currentRoute, {
   otherwise: routes.auth.signin.open,
 });
 export const $post = createStore<api.Post | null>(null);
+$post.watch((p) => console.log(p?.childPosts));
 $post.on(getPostFx.done, (_, { result }) => result);
 sample({
   clock: authorizedRoute.opened,

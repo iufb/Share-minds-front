@@ -14,8 +14,10 @@ import { $user } from "src/shared/session";
 import { currentRoute as profileRoute } from "src/pages/profile/model";
 interface PostViewProps {
   post: Post;
-  layout?: "feed" | "post";
+
   controlButtons: Record<string, ReactNode>;
+  layout?: "feed" | "post";
+  isPostPage?: boolean;
   isSource?: boolean;
 }
 
@@ -23,13 +25,14 @@ export const PostView: FC<PostViewProps> = ({
   post,
   controlButtons,
   isSource,
+  isPostPage,
   layout = "feed",
 }) => {
   const isFeed = layout === "feed";
   const [user, params] = useUnit([$user, profileRoute.$params]);
   return (
     <>
-      {post.source && !post.isRepost && (
+      {post.source && !post.isRepost && !isPostPage && (
         <PostView
           isSource={true}
           post={post.source}
@@ -65,13 +68,13 @@ export const PostView: FC<PostViewProps> = ({
             <Link
               to={routes.profile}
               params={{
-                id: post.author.id,
+                id: post?.author?.id,
               }}
             >
               <Avatar
                 color="light-blue.9"
-                className={clsx(!post.author.avatar && styles["blackBg"])}
-                src={getImgUrl(post.author.avatar)}
+                className={clsx(!post?.author?.avatar && styles["blackBg"])}
+                src={getImgUrl(post?.author?.avatar)}
               />
               {isSource && <hr className={styles["stroke"]} />}
             </Link>
@@ -111,7 +114,7 @@ const PostHeader: FC<PostHeaderProps> = ({ post, isFeed, layout }) => (
       !isFeed && styles["headerWithMargin"],
     )}
     to={routes.profile}
-    params={{ id: post.author.id }}
+    params={{ id: post?.author?.id }}
   >
     {!isFeed && (
       <Avatar
@@ -129,9 +132,9 @@ const PostHeader: FC<PostHeaderProps> = ({ post, isFeed, layout }) => (
         }[layout],
       )}
     >
-      {post.author.username}
+      {post?.author?.username}
       <Text component="h4" size="sm" c="gray">
-        @{post.author.email.split("@")[0]}
+        @{post?.author?.email.split("@")[0]}
       </Text>
     </Box>
   </Link>

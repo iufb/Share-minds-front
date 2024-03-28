@@ -32,6 +32,7 @@ export const RepostButton: FC<RepostButtonProps> = ({ parentPost }) => {
 
   useEffect(() => {
     if (parentPost) buttonMounted(parentPost.id);
+    console.log(parentPost.id, "REPOST >> ID>>");
   }, []);
 
   return (
