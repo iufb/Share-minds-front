@@ -1,5 +1,5 @@
 import { Box, Group, Avatar, Text } from "@mantine/core";
-import { getImgUrl } from "src/shared/utils";
+import { getImgUrl, getNickname } from "src/shared/utils";
 import styles from "./ui.module.css";
 import { Post } from "src/shared/api/post";
 import { FC } from "react";
@@ -20,7 +20,7 @@ export const RepostView: FC<RepostViewProps> = ({ repost, variant }) => {
       <Group gap={5}>
         <Avatar src={getImgUrl(repost.author.avatar)} size={20} />
         <Text>{repost.author.username}</Text>
-        <Text c={"gray"}>@{repost.author.email.split("@")[0]}</Text>
+        <Text c={"gray"}>{getNickname(repost.author.email)}</Text>
       </Group>
       <p>{repost.content}</p>
       {variant === "collapsed" ? (

@@ -5,7 +5,7 @@ import { FC, useEffect } from "react";
 import { ReactPanelButton } from "src/entities/post";
 import { CreateReplyForm } from "src/features/post";
 import { Post } from "src/shared/api/post";
-import { getImgUrl } from "src/shared/utils";
+import { getImgUrl, getNickname } from "src/shared/utils";
 import styles from "./ui.module.css";
 import { useUnit } from "effector-react";
 import { $repliesCount, buttonMounted } from "./model";
@@ -53,13 +53,13 @@ export const ReplyButton: FC<ReplyButtonProps> = ({ source }) => {
               {source.author.username}
             </Text>{" "}
             <Text component="span" c="gray">
-              @{source.author.email.split("@")[0]}
+              {getNickname(source.author.email)}
             </Text>
             <Text component="p">{source.content}</Text>
             <Text component="span" size="xs" c="gray">
               Replying to{" "}
               <Text component="span" c="light-blue.6">
-                @{source.author.email.split("@")[0]}
+                {getNickname(source.author.email)}
               </Text>
             </Text>
           </Grid.Col>

@@ -187,3 +187,6 @@ export const requestFx = createEffect(async (params: Request) => {
   //   throw { message: 'unauthorized' }
   // }
 });
+export const getNickname = (email?: string) => {
+  return email ? `@${email.split("@")[0]}` : "";
+};

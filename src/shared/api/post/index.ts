@@ -124,6 +124,9 @@ interface BookmarkResponse {
   userId: number;
   postId: number;
 }
+export const getBookmarksFx = createEffect(() =>
+  requestFx({ path: "bookmarks", method: "GET" }),
+);
 export const createBookmarkFx = createEffect<
   CreateBookmarkRequest,
   BookmarkResponse

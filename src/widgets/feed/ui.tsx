@@ -11,6 +11,8 @@ import {
 import { $pending, $posts } from "./model";
 export const Feed = () => {
   const [pending, posts] = useUnit([$pending, $posts]);
+  console.log(posts, "FEED");
+
   return (
     <Stack maw={"100%"}>
       <CreatePostForm />

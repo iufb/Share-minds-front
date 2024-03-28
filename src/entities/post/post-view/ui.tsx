@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { Link } from "atomic-router-react";
 import { routes } from "src/shared/routing";
 import { PostReactPanel, RepostView } from "src/entities/post";
-import { getImgUrl } from "src/shared/utils";
+import { getImgUrl, getNickname } from "src/shared/utils";
 import { ImagesView } from "src/shared/ui";
 import { IconRepeat } from "@tabler/icons-react";
 import { useUnit } from "effector-react";
@@ -134,7 +134,7 @@ const PostHeader: FC<PostHeaderProps> = ({ post, isFeed, layout }) => (
     >
       {post?.author?.username}
       <Text component="h4" size="sm" c="gray">
-        @{post?.author?.email.split("@")[0]}
+        {getNickname(post.author.email)}
       </Text>
     </Box>
   </Link>
