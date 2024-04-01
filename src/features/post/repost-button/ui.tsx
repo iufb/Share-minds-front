@@ -49,7 +49,7 @@ export const RepostButton: FC<RepostButtonProps> = ({ parentPost }) => {
           <PopupModal className={styles["modal"]} onClose={closePopup}>
             {currentPostInfo.isReposted ? (
               <Button
-                onClick={() => unrepostButtonClicked()}
+                onClick={() => unrepostButtonClicked(parentPost.id)}
                 icon={<IconRepeat size={20} />}
               >
                 Unrepost

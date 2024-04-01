@@ -11,7 +11,7 @@ const getRepostsCount = attach({ effect: api.getRepostsCountFx });
 
 //Events
 export const repostButtonClicked = createEvent<number>();
-export const unrepostButtonClicked = createEvent();
+export const unrepostButtonClicked = createEvent<number>();
 export const quoteButtonClicked = createEvent();
 export const buttonMounted = createEvent<number>();
 
@@ -22,10 +22,26 @@ export const $repostsInfo = createStore<Record<
   number,
   api.RepostCountResponse
 > | null>(null);
-$repostsInfo.on(getRepostsCount.doneData, (state, result) => ({
-  ...state,
-  [result.sourceId]: result,
-}));
+$repostsInfo.on(getRepostsCount.doneData, (state, result) => {
+  return { ...state, [result.sourceId]: result };
+});
+$repostsInfo.on(unrepostFx.doneData, (state, result) => {
+  console.log(result, "RES");
+
+  if (state) {
+    return {
+      ...state,
+      [result.sourceId]: {
+        ...state[result.sourceId],
+        isReposted: false,
+        count: state[result.sourceId].count - 1,
+      },
+    };
+  } else {
+    return null;
+  }
+});
+
 $postId.on(buttonMounted, (_, id) => id);
 sample({
   clock: buttonMounted,
@@ -66,27 +82,25 @@ sample({
   target: createRepostFx,
 });
 //Unrepost
-type UnrepostValidSource = {
-  info: Record<number, api.RepostCountResponse>;
-  id: number;
-};
-type UnrepostInvalidSource = {
-  info: null;
-  id: null;
-};
+type UnrepostValidSource = Record<number, api.RepostCountResponse>;
+type UnrepostInvalidSource = null;
 type Source = UnrepostValidSource | UnrepostInvalidSource;
+
 sample({
   clock: unrepostButtonClicked,
-  source: { info: $repostsInfo, id: $postId },
-  filter: (source: Source): source is UnrepostValidSource => {
-    if (typeof source.info === "object" && typeof source.id === "number") {
-      return true;
-    } else {
-      return false;
-    }
-  },
-  fn: ({ info, id }) => info[id],
+  source: $repostsInfo,
+  filter: (source: Source): source is UnrepostValidSource =>
+    typeof source === "object",
+  fn: (source, id) => source[id].repostId,
   target: unrepostFx,
+});
+unrepostFx.doneData.watch((c) => console.log(c, "UNREPOST"));
+
+sample({
+  clock: unrepostFx.done,
+  source: $postId,
+  filter: (id: number | null): id is number => typeof id == "number",
+  target: getRepostsCount,
 });
 
 sample({

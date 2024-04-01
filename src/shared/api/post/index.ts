@@ -74,7 +74,7 @@ export interface RepostCountResponse {
   repostId: number;
   sourceId: number;
 }
-export const unrepostFx = createEffect<number, { status: string }, PostError>(
+export const unrepostFx = createEffect<number, { sourceId: number }, PostError>(
   (id) => requestFx({ path: `posts/${id}`, method: "DELETE" }),
 );
 export const getRepostsCountFx = createEffect<
